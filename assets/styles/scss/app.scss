@@ -1,0 +1,29 @@
+@import "~bootstrap/scss/bootstrap";
+
+@import "layouts/navbar";
+
+body {
+    background-color: lightgray;
+    margin-left: 0;
+
+    .body-bg {
+        background: url(https://prileria.net/storage/img/lobbyprileriaete.png) center 0px / cover no-repeat;
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+
+        &:after {
+            background: linear-gradient(0deg, #0B0E12 20%, #0b0e12c4 200%, transparent 0%);
+            position: absolute;
+            z-index: 0;
+            top: 0;
+            width: 100vw;
+            height: calc(100vh);
+            content: "";
+            display: table;
+            clear: both;
+        }
+    }
+}
