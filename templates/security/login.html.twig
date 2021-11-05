@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+   <div class="form-wrapper">
+      <div class="container login-form">
+         <form method="post">
+            {% if error %}
+               <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
+
+            <label for="inputUsername">Votre pseudo</label>
+            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control"
+                   autocomplete="username" required autofocus>
+
+            <label class="pt-3" for="inputPassword">Votre mot de passe</label>
+            <input type="password" name="password" id="inputPassword" class="form-control"
+                   autocomplete="current-password" required>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="checkbox mb-3 pt-3">
+               <label class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="_remember_me">
+                  <label class="form-check-label" for="flexSwitchCheckDefault">Se souvenir de moi</label>
+               </label>
+            </div>
+
+            <button class="btn btn-primary" type="submit">
+               Se connecter
+            </button>
+         </form>
+      </div>
+   </div>
+{% endblock %}

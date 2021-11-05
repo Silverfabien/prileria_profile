@@ -3,7 +3,7 @@
       <li class="navLinks">
          <a href="#">Accueil</a>
       </li>
-      {% if not app.user %}
+      {% if app.user and is_granted('ROLE_STAFF') %}
          <li class="navLinks dropdown">
             <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Modération</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -22,28 +22,34 @@
       </li>
    </ul>
    <ul id="navList" class="navList navListRight">
-      {% if not app.user %}
-         <li class="navLinks dropdown">
-            <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-               <a class="dropdown-item" href="#">Gestion utilisateur</a>
-               <a class="dropdown-item" href="#">Gestion des grades</a>
-               <a class="dropdown-item" href="#">Liste des joueurs</a>
-               <a class="dropdown-item" href="#">Liste des profils bloqués</a>
-               <hr class="dropdown-divider">
-               <a class="dropdown-item" href="#">Switch_User</a>
-               <a class="dropdown-item" href="#">Administration</a>
-            </div>
-         </li>
+      {% if app.user %}
+         {% if is_granted('ROLE_RESP') %}
+            <li class="navLinks dropdown">
+               <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
+               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {% if is_granted('ROLE_ADMIN') %}
+                     <a class="dropdown-item" href="#">Gestion utilisateur</a>
+                     <a class="dropdown-item" href="#">Gestion des grades</a>
+                  {% endif %}
+                  <a class="dropdown-item" href="#">Liste des joueurs</a>
+                  <a class="dropdown-item" href="#">Liste des profils bloqués</a>
+                  <hr class="dropdown-divider">
+                  {% if is_granted('ROLE_ADMIN') %}
+                     <a class="dropdown-item" href="#">Switch_User</a>
+                  {% endif %}
+                  <a class="dropdown-item" href="#">Administration</a>
+               </div>
+            </li>
+         {% endif %}
          <li class="navLinks dropdown">
             <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon Compte</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                <a class="dropdown-item" href="#">Profil</a>
-               <a class="dropdown-item" href="#">Déconnexion</a>
+               <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
             </div>
          </li>
       {% else %}
-         <li class="navLinks"><a href="#">Connexion</a></li>
+         <li class="navLinks"><a href="{{ path('app_login') }}">Connexion</a></li>
       {% endif %}
    </ul>
    <div class="navTrigger">
