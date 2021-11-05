@@ -1,0 +1,58 @@
+<nav class="myNav">
+   <ul id="navList" class="navList navListLeft">
+      <li class="navLinks">
+         <a href="#">Accueil</a>
+      </li>
+      {% if not app.user %}
+         <li class="navLinks dropdown">
+            <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Modération</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+               <a class="dropdown-item" href="#">Ban</a>
+               <a class="dropdown-item" href="#">Mute</a>
+               <a class="dropdown-item" href="#">Kick</a>
+               <a class="dropdown-item" href="#">Warn / Note</a>
+               <a class="dropdown-item" href="#">Report</a>
+            </div>
+         </li>
+      {% endif %}
+   </ul>
+   <ul class="navListMiddle">
+      <li class="navLinks">
+         <img src="https://prileria.net/storage/img/logopprileriablanc.png" alt="Logo">
+      </li>
+   </ul>
+   <ul id="navList" class="navList navListRight">
+      {% if not app.user %}
+         <li class="navLinks dropdown">
+            <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+               <a class="dropdown-item" href="#">Gestion utilisateur</a>
+               <a class="dropdown-item" href="#">Gestion des grades</a>
+               <a class="dropdown-item" href="#">Liste des joueurs</a>
+               <a class="dropdown-item" href="#">Liste des profils bloqués</a>
+               <hr class="dropdown-divider">
+               <a class="dropdown-item" href="#">Switch_User</a>
+               <a class="dropdown-item" href="#">Administration</a>
+            </div>
+         </li>
+         <li class="navLinks dropdown">
+            <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon Compte</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+               <a class="dropdown-item" href="#">Profil</a>
+               <a class="dropdown-item" href="#">Déconnexion</a>
+            </div>
+         </li>
+      {% else %}
+         <li class="navLinks"><a href="#">Connexion</a></li>
+      {% endif %}
+   </ul>
+   <div class="navTrigger">
+      <i></i>
+      <i></i>
+      <i></i>
+   </div>
+</nav>
+
+{% block javascripts %}
+   {{ encore_entry_script_tags('navbar') }}
+{% endblock %}
