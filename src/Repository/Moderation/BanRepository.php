@@ -27,4 +27,10 @@ class BanRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function save($ban)
+    {
+        $this->_em->persist($ban);
+        $this->_em->flush();
+    }
 }

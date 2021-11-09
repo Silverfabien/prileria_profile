@@ -3,6 +3,9 @@
 {% block body %}
    <div>
       <h2 class="text-white text-center">Liste des bans</h2>
+      {% if is_granted('ROLE_RESP') %}
+         <a class="btn btn-info d-block" href="{{ path('moderation_ban_new') }}">Bannir un joueur</a>
+      {% endif %}
    </div>
    <table class="table table-responsive-lg">
       <thead class="table-dark">
@@ -39,9 +42,12 @@
                {% endif %}
             {% endfor %}
             <tr class="bg-light text-center align-middle
-               {% if ban.banState == 0 and ban.banEnd %}bg-table-ban-inactive
-               {% elseif ban.banState == 1 and ban.banEnd %}bg-table-ban-active
-               {% else %}bg-table-ban-definitive
+               {% if ban.banState == 0 and ban.banEnd %}
+                  bg-table-ban-inactive
+               {% elseif ban.banState == 1 and ban.banEnd %}
+                  bg-table-ban-active
+               {% else %}
+                  bg-table-ban-definitive
                {% endif %}
             ">
                <th>

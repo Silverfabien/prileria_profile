@@ -4,6 +4,7 @@ namespace App\Entity\Moderation;
 
 use App\Repository\Moderation\BanRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BanRepository::class)
@@ -21,11 +22,23 @@ class Ban
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true, name="UUID")
+     *
+     * @Assert\Regex(
+     *     pattern="/^[a-z0-9]+$/",
+     *     message="L'uuid de doit pas contenir de ' - '."
+     * )
+     * @Assert\Length(
+     *     max=32,
+     *     min=32,
+     *     exactMessage="L'uuid doit contenir uniquement {{ limit }} caractères. Ex : af860b2e418411ec81d30242ac130003"
+     * )
      */
     private $uuid;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     *
+     * @Assert\Ip(message="Le format de l'ip n'est pas reconnu. Ex: 95.165.32.158")
      */
     private $banIp;
 
@@ -36,11 +49,26 @@ class Ban
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     *
+     * @Assert\Length(
+     *     max=100,
+     *     maxMessage="La raison ne doit pas dépasser {{ limit }} caractères."
+     * )
      */
     private $banReason;
 
     /**
      * @ORM\Column(type="string", length=30)
+     *
+     * @Assert\Regex(
+     *     pattern="/\([^()]+\)/",
+     *     message="Le serveur doit être mit sous forme => (nomDuServeur)."
+     * )
+     *
+     * @Assert\Length(
+     *     max=30,
+     *     maxMessage="Le nom du serveur ne doit pas dépasser {{ limit }} caractères."
+     * )
      */
     private $banServer;
 
