@@ -35,7 +35,7 @@ class BanController extends AbstractController
         PaginatorInterface $paginator
     ): Response
     {
-        $bans = $this->banRepository->findAll();
+        $bans = $this->banRepository->findAllDesc();
 
         $paginate = $paginator->paginate(
             $bans,

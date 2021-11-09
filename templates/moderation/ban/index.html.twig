@@ -38,7 +38,12 @@
                   {% set playerByBanUuid = player.uuid %}
                {% endif %}
             {% endfor %}
-            <tr class="bg-light text-center align-middle">
+            <tr class="bg-light text-center align-middle
+               {% if ban.banState == 0 and ban.banEnd %}bg-table-ban-inactive
+               {% elseif ban.banState == 1 and ban.banEnd %}bg-table-ban-active
+               {% else %}bg-table-ban-definitive
+               {% endif %}
+            ">
                <th>
                   {% if ban.banIp %}
                      <img class="ban-img d-inline-block" src="https://cravatar.eu/head/{{ playerByBanUuid }}/32" alt="">
@@ -64,7 +69,7 @@
                <th>{{ ban.banStaff }}</th>
                <th>{{ ban.banBegin|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
                <th>{{ ban.banEnd ? ban.banEnd|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : 'Définitif' }}</th>
-               <th>{{ ban.banState ? 'Oui' : 'Non' }}</th>
+               <th>{{ ban.banState ? 'Actif' : 'Inactif' }}</th>
                <th>{{ ban.banUnbandate ? ban.banUnbandate|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : '/' }}</th>
                <th>{{ ban.banUnbanstaff ? ban.banUnbanstaff : '/' }}</th>
                <th>{{ ban.banUnbanreason ? ban.banUnbanreason : '/' }}</th>
@@ -77,6 +82,11 @@
          {% endfor %}
       </tbody>
    </table>
+   <div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-ban-active"></span> Ban Actif</div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-ban-inactive"></span> Ban Inactif</div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-ban-definitive"></span> Ban Définitif</div>
+   </div>
    <div class="navigation justify-content-center">
       {{ knp_pagination_render(bans, 'components/pagination.html.twig') }}
    </div>

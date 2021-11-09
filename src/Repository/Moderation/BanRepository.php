@@ -19,32 +19,12 @@ class BanRepository extends ServiceEntityRepository
         parent::__construct($registry, Ban::class);
     }
 
-    // /**
-    //  * @return Ban[] Returns an array of Ban objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllDesc()
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('b.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Ban
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
