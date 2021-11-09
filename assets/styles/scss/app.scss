@@ -2,6 +2,8 @@
 
 @import "layouts/navbar";
 @import "content/security/login";
+@import "content/moderation/ban";
+@import "components/pagination";
 
 body {
     background-color: lightgray;
@@ -27,4 +29,6 @@ body {
             clear: both;
         }
     }
+
+
 }

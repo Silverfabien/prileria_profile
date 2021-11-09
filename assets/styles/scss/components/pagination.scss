@@ -1,0 +1,21 @@
+.navigation {
+  display: grid;
+
+  .page-item.active .page-link {
+    background-color: #E47A29;
+    border-color: #E47A29;
+  }
+
+  .page-link {
+    color: black;
+
+    &:hover {
+      background-color: #efb385;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.25rem rgb(243 170 94 / 25%);
+      background-color: #efb385;
+    }
+  }
+}
