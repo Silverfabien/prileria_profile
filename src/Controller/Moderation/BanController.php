@@ -162,7 +162,8 @@ class BanController extends AbstractController
         return $this->render('moderation/ban/show.html.twig', [
             'ban' => $ban,
             'firstPlayer' => $this->playersRepository->findOneBy(['lastip' => $ban->getBanIp()]),
-            'players' => $this->playersRepository->findBy(['lastip' => $ban->getBanIp()])
+            'playersByIp' => $this->playersRepository->findBy(['lastip' => $ban->getBanIp()]),
+            'playerByUuid' => $this->playersRepository->findOneBy(['uuid' => $ban->getUuid()])
         ]);
     }
 }

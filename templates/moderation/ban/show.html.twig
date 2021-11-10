@@ -45,11 +45,11 @@
                <p>
                   <b>Pseudo(s) :</b>
                   {% set countPlayer = 0 %}
-                  {% for player in players %}
+                  {% for player in playersByIp %}
                      {% set countPlayer = countPlayer + 1 %}
                      {{ countPlayer > 1 ? "/ "~player.batPlayer : player.batPlayer }}
                   {% endfor %}
-                  {{ ban.uuid ? ban.uuid : "" }}
+                  {{ ban.uuid ? playerByUuid.batPlayer : "" }}
                </p>
                <p><b>Ban par :</b> {{ ban.banStaff }}</p>
                <p><b>Raison :</b> {{ ban.banReason }}</p>
