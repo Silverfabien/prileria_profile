@@ -1,4 +1,16 @@
 .moderation-form {
   background-color: #AAAAAA;
   padding: 15px;
+
+  .form-info {
+    display: block;
+    margin-top: -15px;
+    padding-bottom: 10px;
+
+    .red-stars {
+      color: #a40000;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
 }
