@@ -1,0 +1,10 @@
+<div class="moderation-form">
+   <h1 class="text-center">{{ title }}</h1>
+   {{ form_start(form) }}
+   {{ form_widget(form) }}
+   <label class="form-info">
+      <span class="red-stars">*</span> m = Minute / h = Heure / d = Jour / M = Mois / y = Année
+   </label>
+   <button class="btn btn-success">{{ button_label|default('Envoyer') }}</button>
+   {{ form_end(form) }}
+</div>

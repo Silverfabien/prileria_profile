@@ -4,6 +4,8 @@ namespace App\Repository\Moderation;
 
 use App\Entity\Moderation\Ban;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,9 +30,20 @@ class BanRepository extends ServiceEntityRepository
         ;
     }
 
-    public function save($ban)
+    public function save($ban): void
     {
         $this->_em->persist($ban);
+        $this->_em->flush();
+    }
+
+    public function update($ban): void
+    {
+        $this->_em->flush();
+    }
+
+    public function remove($ban): void
+    {
+        $this->_em->remove($ban);
         $this->_em->flush();
     }
 }

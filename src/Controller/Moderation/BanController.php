@@ -7,6 +7,7 @@ use App\Entity\Moderation\Ban;
 use App\Form\Moderation\BanType;
 use App\Repository\Moderation\BanRepository;
 use App\Repository\Player\PlayersRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -61,6 +62,7 @@ class BanController extends AbstractController
      * @param Request $request
      * @param UserInterface $user
      * @return Response
+     * @throws Exception
      *
      * @Route("/new", name="new", methods={"GET", "POST"})
      *
@@ -74,7 +76,7 @@ class BanController extends AbstractController
         $ban = new Ban();
         $form = $this->createForm(BanType::class, $ban)->handleRequest($request);
 
-        if ($this->banHandler->createBanHandler($form, $ban, $user)) {
+        if ($this->banHandler->createBanHandle($form, $ban, $user)) {
             $this->addFlash('success', sprintf(
                 "Le ban du joueur avec l'uuid %s a bien été effectué",
                 $ban->getUuid()
@@ -84,8 +86,83 @@ class BanController extends AbstractController
         }
 
         return $this->render('moderation/ban/new.html.twig', [
+            'form' => $form->createView(),
+            'title' => 'Ajouter un ban'
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param Ban $ban
+     * @return Response
+     * @throws Exception
+     *
+     * @Route("/edit/{id}", name="edit", methods={"GET", "POST"})
+     *
+     * @IsGranted("ROLE_RESP")
+     */
+    public function edit(
+        Request $request,
+        Ban $ban
+    ): Response
+    {
+        $form = $this->createForm(BanType::class, $ban)->handleRequest($request);
+
+        if ($this->banHandler->editBanHandle($form, $ban)) {
+            $this->addFlash('success', sprintf(
+                "Le ban du joueur avec l'uuid %s a bien été modifié",
+                $ban->getUuid()
+            ));
+
+            return $this->redirectToRoute('moderation_ban_index');
+        }
+
+        return $this->render('moderation/ban/edit.html.twig', [
+            'form' => $form->createView(),
+            'title' => 'Modifier un ban'
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param Ban $ban
+     * @return Response
+     *
+     * @Route("/delete/{id}", name="delete", methods={"DELETE"})
+     *
+     * @IsGranted("ROLE_RESP")
+     */
+    public function delete(
+        Request $request,
+        Ban $ban
+    ): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$ban->getId(), $request->request->get('_token'))) {
+            $this->banHandler->deleteBanHandle($ban);
+
+            $this->addFlash('success', sprintf(
+                "Le ban du joueur avec l'uuid %s a bien été supprimé",
+                $ban->getUuid()
+            ));
+        }
+
+        return $this->redirectToRoute('moderation_ban_index');
+    }
+
+    /**
+     * @param Ban $ban
+     * @return Response
+     *
+     * @Route("/show/{id}", name="show", methods={"GET"})
+     */
+    public function show(
+        Ban $ban
+    ): Response
+    {
+        return $this->render('moderation/ban/show.html.twig', [
             'ban' => $ban,
-            'form' => $form->createView()
+            'firstPlayer' => $this->playersRepository->findOneBy(['lastip' => $ban->getBanIp()]),
+            'players' => $this->playersRepository->findBy(['lastip' => $ban->getBanIp()])
         ]);
     }
 }

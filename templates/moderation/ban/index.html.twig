@@ -37,7 +37,9 @@
                   {% set countPlayerByIp = countPlayerByIp + 1 %}
                {% endif %}
                {% if ban.banIp == player.lastip %}
-                  {% set playerByBanIp = player.batPlayer %}
+                  {% if countPlayerByIp < 1 %}
+                     {% set playerByBanIp = player.batPlayer %}
+                  {% endif %}
                   {% set playerByBanUuid = player.uuid %}
                {% endif %}
             {% endfor %}
@@ -64,14 +66,15 @@
                      {% else %}
                         Adresse Ip Caché
                      {% endif %}
-                  {% endif %}
-                  {% if ban.uuid %}
+                  {% else %}
                      <img class="ban-img d-inline-block" src="https://cravatar.eu/head/{{ ban.uuid }}/32" alt="">
                      <a class="d-block" href="#">{{ batPlayer }}</a>
                   {% endif %}
                </th>
                <th>{{ ban.banServer }}</th>
-               <th>{{ ban.banReason ? ban.banReason : '/' }}</th>
+               <th>
+                  <a href="{{ path('moderation_ban_show', {'id': ban.id}) }}">{{ ban.banReason ? ban.banReason : '/' }}</a>
+               </th>
                <th>{{ ban.banStaff }}</th>
                <th>{{ ban.banBegin|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
                <th>{{ ban.banEnd ? ban.banEnd|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : 'Définitif' }}</th>
@@ -79,7 +82,12 @@
                <th>{{ ban.banUnbandate ? ban.banUnbandate|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : '/' }}</th>
                <th>{{ ban.banUnbanstaff ? ban.banUnbanstaff : '/' }}</th>
                <th>{{ ban.banUnbanreason ? ban.banUnbanreason : '/' }}</th>
-               <th></th>
+               <th class="table-btn-action">
+                  <a class="btn btn-info" href="{{ path('moderation_ban_edit', {'id': ban.id}) }}">
+                     <i class="fas fa-pencil-alt"></i>
+                  </a>
+                  {{ include('moderation/ban/_delete_form.html.twig') }}
+               </th>
             </tr>
          {% else %}
             <tr>

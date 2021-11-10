@@ -1,0 +1,5 @@
+<form class="table-btn-action-delete" method="post" action="{{ path('moderation_ban_delete', {'id': ban.id}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer ce ban ?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ban.id) }}">
+    <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+</form>
