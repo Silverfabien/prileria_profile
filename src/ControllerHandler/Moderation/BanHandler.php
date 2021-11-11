@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ControllerHandler;
+namespace App\ControllerHandler\Moderation;
 
 use App\Entity\Moderation\Ban;
 use App\Repository\Moderation\BanRepository;

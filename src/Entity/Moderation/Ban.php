@@ -3,6 +3,7 @@
 namespace App\Entity\Moderation;
 
 use App\Repository\Moderation\BanRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -104,7 +105,7 @@ class Ban
 
     public function __construct()
     {
-        $this->banBegin = new \DateTimeImmutable();
+        $this->banBegin = new DateTimeImmutable();
         $this->banState = 1;
     }
 

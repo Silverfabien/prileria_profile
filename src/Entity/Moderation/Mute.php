@@ -3,6 +3,7 @@
 namespace App\Entity\Moderation;
 
 use App\Repository\Moderation\MuteRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -104,7 +105,7 @@ class Mute
 
     public function __construct()
     {
-        $this->muteBegin = new \DateTimeImmutable();
+        $this->muteBegin = new DateTimeImmutable();
         $this->muteState = 1;
     }
 

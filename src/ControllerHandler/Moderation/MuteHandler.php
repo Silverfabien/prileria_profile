@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ControllerHandler;
+namespace App\ControllerHandler\Moderation;
 
 use App\Entity\Moderation\Mute;
 use App\Repository\Moderation\MuteRepository;

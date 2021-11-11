@@ -2,12 +2,11 @@
 
 namespace App\Controller\Moderation;
 
-use App\ControllerHandler\Moderation\MuteHandler;
-use App\Entity\Moderation\Mute;
-use App\Form\Moderation\MuteType;
-use App\Repository\Moderation\MuteRepository;
+use App\ControllerHandler\Moderation\KickHandler;
+use App\Entity\Moderation\Kick;
+use App\Form\Moderation\KickType;
+use App\Repository\Moderation\KickRepository;
 use App\Repository\Player\PlayersRepository;
-use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,23 +16,23 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @Route("/moderation/mute", name="moderation_mute_")
+ * @Route("/moderation/kick", name="moderation_kick_")
  */
-class MuteController extends AbstractController
+class KickController extends AbstractController
 {
-    private MuteRepository $muteRepository;
+    private KickRepository $kickRepository;
     private PlayersRepository $playersRepository;
-    private MuteHandler $muteHandler;
+    private KickHandler $kickHandler;
 
     public function __construct(
-        MuteRepository $muteRepository,
+        KickRepository $kickRepository,
         PlayersRepository $playersRepository,
-        MuteHandler $muteHandler
+        KickHandler $kickHandler
     )
     {
-        $this->muteRepository = $muteRepository;
+        $this->kickRepository = $kickRepository;
         $this->playersRepository = $playersRepository;
-        $this->muteHandler = $muteHandler;
+        $this->kickHandler = $kickHandler;
     }
 
     /**
@@ -48,16 +47,16 @@ class MuteController extends AbstractController
         PaginatorInterface $paginator
     ): Response
     {
-        $mutes = $this->muteRepository->findAllDesc();
+        $kick = $this->kickRepository->findAllDesc();
 
         $paginate = $paginator->paginate(
-            $mutes,
+            $kick,
             $request->query->getInt('page', 1),
             20
         );
 
-        return $this->render('moderation/mute/index.html.twig', [
-            'mutes' => $paginate,
+        return $this->render('moderation/kick/index.html.twig', [
+            'kicks' => $paginate,
             'players' => $this->playersRepository->findAll()
         ]);
     }
@@ -66,7 +65,6 @@ class MuteController extends AbstractController
      * @param Request $request
      * @param UserInterface $user
      * @return Response
-     * @throws Exception
      *
      * @Route("/new", name="new", methods={"GET", "POST"})
      *
@@ -77,29 +75,28 @@ class MuteController extends AbstractController
         UserInterface $user
     ): Response
     {
-        $mute = new Mute();
-        $form = $this->createForm(MuteType::class, $mute)->handleRequest($request);
+        $kick = new Kick();
+        $form = $this->createForm(KickType::class, $kick)->handleRequest($request);
 
-        if ($this->muteHandler->createMuteHandle($form, $mute, $user)) {
+        if ($this->kickHandler->createKickHandle($form, $kick, $user)) {
             $this->addFlash('success', sprintf(
-                "Le mute du joueur avec l'uuid %s a bien été effectué",
-                $mute->getUuid()
+                "Le kick du joueur avec l'uuid %s a bien été effectué",
+                $kick->getUuid()
             ));
 
-            return $this->redirectToRoute('moderation_mute_index');
+            return $this->redirectToRoute('moderation_kick_index');
         }
 
-        return $this->render('moderation/mute/new.html.twig', [
+        return $this->render('moderation/kick/new.html.twig', [
             'form' => $form->createView(),
-            'title' => 'Ajouter un mute'
+            'title' => 'Ajouter un kick'
         ]);
     }
 
     /**
      * @param Request $request
-     * @param Mute $mute
+     * @param Kick $kick
      * @return Response
-     * @throws Exception
      *
      * @Route("/edit/{id}", name="edit", methods={"GET", "POST"})
      *
@@ -107,29 +104,29 @@ class MuteController extends AbstractController
      */
     public function edit(
         Request $request,
-        Mute $mute
+        Kick $kick
     ): Response
     {
-        $form = $this->createForm(MuteType::class, $mute)->handleRequest($request);
+        $form = $this->createForm(KickType::class, $kick)->handleRequest($request);
 
-        if ($this->muteHandler->editMuteHandle($form, $mute)) {
+        if ($this->kickHandler->editKickHandle($form, $kick)) {
             $this->addFlash('success', sprintf(
-                "Le mute du joueur avec l'uuid %s a bien été modifié",
-                $mute->getUuid()
+                "Le kick du joueur avec l'uuid %s a bien été modifié",
+                $kick->getUuid()
             ));
 
-            return $this->redirectToRoute('moderation_mute_index');
+            return $this->redirectToRoute('moderation_kick_index');
         }
 
-        return $this->render('moderation/mute/edit.html.twig', [
+        return $this->render('moderation/kick/edit.html.twig', [
             'form' => $form->createView(),
-            'title' => 'Modifier un mute'
+            'title' => 'Modifier un kick'
         ]);
     }
 
     /**
      * @param Request $request
-     * @param Mute $mute
+     * @param Kick $kick
      * @return Response
      *
      * @Route("/delete/{id}", name="delete", methods={"DELETE"})
@@ -138,36 +135,34 @@ class MuteController extends AbstractController
      */
     public function delete(
         Request $request,
-        Mute $mute
+        Kick $kick
     ): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$mute->getId(), $request->request->get('_token'))) {
-            $this->muteHandler->deleteMuteHandle($mute);
+        if ($this->isCsrfTokenValid('delete'.$kick->getId(), $request->request->get('_token'))) {
+            $this->kickHandler->deleteKickHandle($kick);
 
             $this->addFlash('success', sprintf(
-                "Le mute du joueur avec l'uuid %s a bien été supprimé",
-                $mute->getUuid()
+                "Le kick du joueur avec l'uuid %s a bien été supprimé",
+                $kick->getUuid()
             ));
         }
 
-        return $this->redirectToRoute('moderation_mute_index');
+        return $this->redirectToRoute('moderation_kick_index');
     }
 
     /**
-     * @param Mute $mute
+     * @param Kick $kick
      * @return Response
      *
      * @Route("/show/{id}", name="show", methods={"GET"})
      */
     public function show(
-        Mute $mute
+        Kick $kick
     ): Response
     {
-        return $this->render('moderation/mute/show.html.twig', [
-            'mute' => $mute,
-            'firstPlayer' => $this->playersRepository->findOneBy(['lastip' => $mute->getMuteIp()]),
-            'playersByIp' => $this->playersRepository->findBy(['lastip' => $mute->getMuteIp()]),
-            'playerByUuid' => $this->playersRepository->findOneBy(['uuid' => $mute->getUuid()])
+        return $this->render('moderation/kick/show.html.twig', [
+            'kick' => $kick,
+            'playerByUuid' => $this->playersRepository->findOneBy(['uuid' => $kick->getUuid()])
         ]);
     }
 }

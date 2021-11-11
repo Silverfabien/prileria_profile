@@ -2,7 +2,7 @@
 
 namespace App\Controller\Moderation;
 
-use App\ControllerHandler\BanHandler;
+use App\ControllerHandler\Moderation\BanHandler;
 use App\Entity\Moderation\Ban;
 use App\Form\Moderation\BanType;
 use App\Repository\Moderation\BanRepository;
