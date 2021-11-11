@@ -1,0 +1,60 @@
+// Variable =====>
+$bg-mute-active: #e87a7a;
+$bg-demo-mute-active: #ce5858;
+$bg-show-mute-active: #aa3333;
+$bg-mute-inactive: #a0d6b0;
+$bg-demo-mute-inactive: #71b687;
+$bg-show-mute-inactive: #5eb5e0;
+$bg-mute-definitive: #808080;
+$bg-demo-mute-definitive: #606060;
+$bg-show-mute-definitive: #b2b2b2;
+// <===== Variable
+
+.bg-table-mute-active {
+  background-color: $bg-mute-active!important;
+}
+
+.bg-table-mute-inactive {
+  background-color: $bg-mute-inactive!important;
+}
+
+.bg-table-mute-definitive {
+  background-color: $bg-mute-definitive!important;
+}
+
+.text-demo-table {
+  @include text-demo-table;
+
+  .bg-demo-table-mute-active {
+    background-color: $bg-mute-active;
+    @include bg-border-demo-table($bg-demo-mute-active);
+    @include mixin-demo-table-first;
+  }
+
+  .bg-demo-table-mute-inactive {
+    background-color: $bg-mute-inactive;
+    @include bg-border-demo-table($bg-demo-mute-inactive);
+    @include mixin-demo-table-second;
+  }
+
+  .bg-demo-table-mute-definitive {
+    background-color: $bg-mute-definitive;
+    @include bg-border-demo-table($bg-demo-mute-definitive);
+    @include mixin-demo-table-second;
+  }
+}
+
+.bg-show-mute-active {
+  @include padding-show;
+  background-color: $bg-show-mute-active;
+}
+
+.bg-show-mute-inactive {
+  @include padding-show;
+  background-color: $bg-show-mute-inactive;
+}
+
+.bg-show-mute-definitive {
+  @include padding-show;
+  background-color: $bg-show-mute-definitive;
+}

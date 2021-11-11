@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div class="container">
+      <div class="bg-show-kick">
+         <h1 class="text-center">Information du kick n°{{ kick.id }}</h1>
+         <div class="row">
+            <div class="col-lg-3">
+               <img src="https://cravatar.eu/head/{{ kick.uuid }}/128" alt="">
+            </div>
+            <div class="col-lg-9">
+               <h4>
+                  {{ kick.uuid }}
+                  <a class="btn btn-info" href="{{ path('moderation_kick_edit', {'id': kick.id}) }}">
+                     <i class="fas fa-pencil-alt"></i>
+                  </a>
+                  {{ include('moderation/kick/_delete_form.html.twig') }}
+               </h4>
+               <p>
+                  <b>Mute le :</b> {{ kick.kickDate|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}
+               </p>
+            </div>
+            <hr>
+            <div class="col-12">
+               <p><b>Pseudo :</b> {{ playerByUuid.batPlayer }}</p>
+               <p><b>Mute par :</b> {{ kick.kickStaff }}</p>
+               <p><b>Raison :</b> {{ kick.kickReason }}</p>
+               <p><b>Serveur :</b> {{ kick.kickServer }}</p>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}

@@ -15,11 +15,11 @@
             <th>Raison</th>
             <th>Staff</th>
             <th>Date</th>
-            <th>Date unban</th>
+            <th>Date Unban</th>
             <th>État</th>
             <th>Date Unban</th>
-            <th>Staff unban</th>
-            <th>Raison unban</th>
+            <th>Staff Unban</th>
+            <th>Raison Unban</th>
             <th>Action</th>
          </tr>
       </thead>
@@ -54,7 +54,7 @@
             ">
                <th>
                   {% if ban.banIp %}
-                     <img class="ban-img d-inline-block" src="https://cravatar.eu/head/{{ playerByBanUuid }}/32" alt="">
+                     <img class="d-inline-block" src="https://cravatar.eu/head/{{ playerByBanUuid }}/32" alt="">
                      <a class="d-block" href="#">{{ playerByBanIp }}</a>
                      {% if is_granted('ROLE_RESP') %}
                         {{ ban.banIp }}
@@ -67,7 +67,7 @@
                         Adresse Ip Caché
                      {% endif %}
                   {% else %}
-                     <img class="ban-img d-inline-block" src="https://cravatar.eu/head/{{ ban.uuid }}/32" alt="">
+                     <img class="d-inline-block" src="https://cravatar.eu/head/{{ ban.uuid }}/32" alt="">
                      <a class="d-block" href="#">{{ batPlayer }}</a>
                   {% endif %}
                </th>

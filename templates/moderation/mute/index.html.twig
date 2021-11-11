@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div>
+      <h2 class="text-white text-center">Liste des mutes</h2>
+      {% if is_granted('ROLE_RESP') %}
+         <a class="btn btn-info d-block" href="{{ path('moderation_mute_new') }}">Mute un joueur</a>
+      {% endif %}
+   </div>
+   <table class="table table-responsive-lg">
+      <thead class="table-dark">
+      <tr class="text-center">
+         <th>Pseudo / Ip</th>
+         <th>Serveur</th>
+         <th>Raison</th>
+         <th>Staff</th>
+         <th>Date</th>
+         <th>Date Unmute</th>
+         <th>État</th>
+         <th>Date Unmute</th>
+         <th>Staff Unmute</th>
+         <th>Raison Unmute</th>
+         <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for mute in mutes %}
+         {% set batPlayer = "" %}
+         {% set countPlayerByIp = -1 %}
+         {% set playerByMuteIp = "" %}
+         {% set playerByMuteUuid = "" %}
+         {% for player in players %}
+            {% if mute.uuid == player.uuid %}
+               {% set batPlayer = player.batPlayer %}
+            {% endif %}
+            {% if mute.muteIp == player.lastip %}
+               {% set countPlayerByIp = countPlayerByIp + 1 %}
+            {% endif %}
+            {% if mute.muteIp == player.lastip %}
+               {% if countPlayerByIp < 1 %}
+                  {% set playerByMuteIp = player.batPlayer %}
+               {% endif %}
+               {% set playerByMuteUuid = player.uuid %}
+            {% endif %}
+         {% endfor %}
+         <tr class="bg-light text-center align-middle
+               {% if mute.muteState == 0 and mute.muteEnd %}
+                  bg-table-mute-inactive
+               {% elseif mute.muteState == 1 and mute.muteEnd %}
+                  bg-table-mute-active
+               {% else %}
+                  bg-table-mute-definitive
+               {% endif %}
+            ">
+            <th>
+               {% if mute.muteIp %}
+                  <img class="d-inline-block" src="https://cravatar.eu/head/{{ playerByMuteUuid }}/32" alt="">
+                  <a class="d-block" href="#">{{ playerByMuteIp }}</a>
+                  {% if is_granted('ROLE_RESP') %}
+                     {{ mute.muteIp }}
+                     {% if countPlayerByIp == 1 %}
+                        + 1 compte
+                     {% elseif countPlayerByIp > 1 %}
+                        + {{ countPlayerByIp }} comptes
+                     {% endif %}
+                  {% else %}
+                     Adresse Ip Caché
+                  {% endif %}
+               {% else %}
+                  <img class="d-inline-block" src="https://cravatar.eu/head/{{ mute.uuid }}/32" alt="">
+                  <a class="d-block" href="#">{{ batPlayer }}</a>
+               {% endif %}
+            </th>
+            <th>{{ mute.muteServer }}</th>
+            <th>
+               <a href="{{ path('moderation_mute_show', {'id': mute.id}) }}">{{ mute.muteReason ? mute.muteReason : '/' }}</a>
+            </th>
+            <th>{{ mute.muteStaff }}</th>
+            <th>{{ mute.muteBegin|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
+            <th>{{ mute.muteEnd ? mute.muteEnd|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : 'Définitif' }}</th>
+            <th>{{ mute.muteState ? 'Actif' : 'Inactif' }}</th>
+            <th>{{ mute.muteUnmutedate ? mute.muteUnmutedate|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : '/' }}</th>
+            <th>{{ mute.muteUnmutestaff ? mute.muteUnmutestaff : '/' }}</th>
+            <th>{{ mute.muteUnmutereason ? mute.muteUnmutereason : '/' }}</th>
+            <th class="table-btn-action">
+               <a class="btn btn-info" href="{{ path('moderation_mute_edit', {'id': mute.id}) }}">
+                  <i class="fas fa-pencil-alt"></i>
+               </a>
+               {{ include('moderation/mute/_delete_form.html.twig') }}
+            </th>
+         </tr>
+      {% else %}
+         <tr>
+            <td colspan="13">Aucune sanction actuellement</td>
+         </tr>
+      {% endfor %}
+      </tbody>
+   </table>
+   <div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-mute-active"></span> Mute Actif</div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-mute-inactive"></span> Mute Inactif</div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-mute-definitive"></span> Mute Définitif</div>
+   </div>
+   <div class="navigation justify-content-center">
+      {{ knp_pagination_render(mutes, 'components/pagination.html.twig') }}
+   </div>
+{% endblock %}

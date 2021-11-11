@@ -2,22 +2,22 @@
 
 namespace App\Entity\Moderation;
 
-use App\Repository\Moderation\BanRepository;
+use App\Repository\Moderation\MuteRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=BanRepository::class)
+ * @ORM\Entity(repositoryClass=MuteRepository::class)
  *
- * @ORM\Table(name="`BAT_ban`")
+ * @ORM\Table(name="`BAT_mute`")
  */
-class Ban
+class Mute
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="ban_id")
+     * @ORM\Column(type="integer", name="mute_id")
      */
     private $id;
 
@@ -41,12 +41,12 @@ class Ban
      *
      * @Assert\Ip(message="Le format de l'ip n'est pas reconnu. Ex: 95.165.32.158")
      */
-    private $banIp;
+    private $muteIp;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $banStaff;
+    private $muteStaff;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -56,7 +56,7 @@ class Ban
      *     maxMessage="La raison ne doit pas dépasser {{ limit }} caractères."
      * )
      */
-    private $banReason;
+    private $muteReason;
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -71,42 +71,42 @@ class Ban
      *     maxMessage="Le nom du serveur ne doit pas dépasser {{ limit }} caractères."
      * )
      */
-    private $banServer;
+    private $muteServer;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $banBegin;
+    private $muteBegin;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $banEnd;
+    private $muteEnd;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $banState;
+    private $muteState;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $banUnbandate;
+    private $muteUnmutedate;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
      */
-    private $banUnbanstaff;
+    private $muteUnmutestaff;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $banUnbanreason;
+    private $muteUnmutereason;
 
     public function __construct()
     {
-        $this->banBegin = new DateTimeImmutable();
-        $this->banState = 1;
+        $this->muteBegin = new DateTimeImmutable();
+        $this->muteState = 1;
     }
 
     public function getId(): ?int
@@ -126,122 +126,122 @@ class Ban
         return $this;
     }
 
-    public function getBanIp(): ?string
+    public function getMuteIp(): ?string
     {
-        return $this->banIp;
+        return $this->muteIp;
     }
 
-    public function setBanIp(?string $banIp): self
+    public function setMuteIp(?string $muteIp): self
     {
-        $this->banIp = $banIp;
+        $this->muteIp = $muteIp;
 
         return $this;
     }
 
-    public function getBanStaff(): ?string
+    public function getMuteStaff(): ?string
     {
-        return $this->banStaff;
+        return $this->muteStaff;
     }
 
-    public function setBanStaff(string $banStaff): self
+    public function setMuteStaff(string $muteStaff): self
     {
-        $this->banStaff = $banStaff;
+        $this->muteStaff = $muteStaff;
 
         return $this;
     }
 
-    public function getBanReason(): ?string
+    public function getMuteReason(): ?string
     {
-        return $this->banReason;
+        return $this->muteReason;
     }
 
-    public function setBanReason(?string $banReason): self
+    public function setMuteReason(?string $muteReason): self
     {
-        $this->banReason = $banReason;
+        $this->muteReason = $muteReason;
 
         return $this;
     }
 
-    public function getBanServer(): ?string
+    public function getMuteServer(): ?string
     {
-        return $this->banServer;
+        return $this->muteServer;
     }
 
-    public function setBanServer(string $banServer): self
+    public function setMuteServer(string $muteServer): self
     {
-        $this->banServer = $banServer;
+        $this->muteServer = $muteServer;
 
         return $this;
     }
 
-    public function getBanBegin(): ?\DateTimeInterface
+    public function getMuteBegin(): ?\DateTimeInterface
     {
-        return $this->banBegin;
+        return $this->muteBegin;
     }
 
-    public function setBanBegin(\DateTimeInterface $banBegin): self
+    public function setMuteBegin(\DateTimeInterface $muteBegin): self
     {
-        $this->banBegin = $banBegin;
+        $this->muteBegin = $muteBegin;
 
         return $this;
     }
 
-    public function getBanEnd(): ?\DateTimeInterface
+    public function getMuteEnd(): ?\DateTimeInterface
     {
-        return $this->banEnd;
+        return $this->muteEnd;
     }
 
-    public function setBanEnd(?\DateTimeInterface $banEnd): self
+    public function setMuteEnd(?\DateTimeInterface $muteEnd): self
     {
-        $this->banEnd = $banEnd;
+        $this->muteEnd = $muteEnd;
 
         return $this;
     }
 
-    public function getBanState(): ?int
+    public function getMuteState(): ?int
     {
-        return $this->banState;
+        return $this->muteState;
     }
 
-    public function setBanState(int $banState): self
+    public function setMuteState(int $muteState): self
     {
-        $this->banState = $banState;
+        $this->muteState = $muteState;
 
         return $this;
     }
 
-    public function getBanUnbandate(): ?\DateTimeInterface
+    public function getMuteUnmutedate(): ?\DateTimeInterface
     {
-        return $this->banUnbandate;
+        return $this->muteUnmutedate;
     }
 
-    public function setBanUnbandate(?\DateTimeInterface $banUnbandate): self
+    public function setMuteUnmutedate(?\DateTimeInterface $muteUnmutedate): self
     {
-        $this->banUnbandate = $banUnbandate;
+        $this->muteUnmutedate = $muteUnmutedate;
 
         return $this;
     }
 
-    public function getBanUnbanstaff(): ?string
+    public function getMuteUnmutestaff(): ?string
     {
-        return $this->banUnbanstaff;
+        return $this->muteUnmutestaff;
     }
 
-    public function setBanUnbanstaff(?string $banUnbanstaff): self
+    public function setMuteUnmutestaff(?string $muteUnmutestaff): self
     {
-        $this->banUnbanstaff = $banUnbanstaff;
+        $this->muteUnmutestaff = $muteUnmutestaff;
 
         return $this;
     }
 
-    public function getBanUnbanreason(): ?string
+    public function getMuteUnmutereason(): ?string
     {
-        return $this->banUnbanreason;
+        return $this->muteUnmutereason;
     }
 
-    public function setBanUnbanreason(?string $banUnbanreason): self
+    public function setMuteUnmutereason(string $muteUnmutereason): self
     {
-        $this->banUnbanreason = $banUnbanreason;
+        $this->muteUnmutereason = $muteUnmutereason;
 
         return $this;
     }

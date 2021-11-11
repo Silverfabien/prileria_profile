@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div>
+      <h2 class="text-white text-center">Liste des kicks</h2>
+      {% if is_granted('ROLE_RESP') %}
+         <a class="btn btn-info d-block" href="{{ path('moderation_kick_new') }}">Kick un joueur</a>
+      {% endif %}
+   </div>
+   <table class="table table-responsive-lg">
+      <thead class="table-dark">
+      <tr class="text-center">
+         <th>Pseudo</th>
+         <th>Serveur</th>
+         <th>Raison</th>
+         <th>Staff</th>
+         <th>Date</th>
+         <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for kick in kicks %}
+         {% set batPlayer = "" %}
+         {% for player in players %}
+            {% if kick.uuid == player.uuid %}
+               {% set batPlayer = player.batPlayer %}
+            {% endif %}
+         {% endfor %}
+         <tr class="bg-light text-center align-middle bg-table-kick">
+            <th>
+               <img class="d-inline-block" src="https://cravatar.eu/head/{{ kick.uuid }}/32" alt="">
+               <a class="d-block" href="#">{{ batPlayer }}</a>
+            </th>
+            <th>{{ kick.kickServer }}</th>
+            <th>
+               <a href="{{ path('moderation_kick_show', {'id': kick.id}) }}">{{ kick.kickReason ? kick.kickReason : '/' }}</a>
+            </th>
+            <th>{{ kick.kickStaff }}</th>
+            <th>{{ kick.kickDate|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
+            <th class="table-btn-action">
+               <a class="btn btn-info" href="{{ path('moderation_kick_edit', {'id': kick.id}) }}">
+                  <i class="fas fa-pencil-alt"></i>
+               </a>
+               {{ include('moderation/kick/_delete_form.html.twig') }}
+            </th>
+         </tr>
+      {% else %}
+         <tr>
+            <td colspan="13">Aucune sanction actuellement</td>
+         </tr>
+      {% endfor %}
+      </tbody>
+   </table>
+   <div class="navigation justify-content-center">
+      {{ knp_pagination_render(kicks, 'components/pagination.html.twig') }}
+   </div>
+{% endblock %}
