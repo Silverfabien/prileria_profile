@@ -5,7 +5,6 @@ namespace App\ControllerHandler\Moderation;
 use App\Entity\Moderation\Kick;
 use App\Repository\Moderation\KickRepository;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class KickHandler
 {
@@ -16,29 +15,6 @@ class KickHandler
     )
     {
         $this->kickRepository = $kickRepository;
-    }
-
-    /**
-     * @param FormInterface $form
-     * @param Kick $kick
-     * @param UserInterface $user
-     * @return bool
-     */
-    public function createKickHandle(
-        FormInterface $form,
-        Kick $kick,
-        UserInterface $user
-    ): bool
-    {
-        if ($form->isSubmitted() && $form->isValid()) {
-            $kick->setKickStaff($user->getUserIdentifier());
-
-            $this->kickRepository->save($kick);
-
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -60,9 +36,13 @@ class KickHandler
         return false;
     }
 
+    /**
+     * @param Kick $kick
+     * @return bool
+     */
     public function deleteKickHandle(
         Kick $kick
-    )
+    ): bool
     {
         $this->kickRepository->remove($kick);
 

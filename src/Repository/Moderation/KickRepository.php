@@ -28,12 +28,6 @@ class KickRepository extends ServiceEntityRepository
             ;
     }
 
-    public function save($kick)
-    {
-        $this->_em->persist($kick);
-        $this->_em->flush();
-    }
-
     public function update($kick)
     {
         $this->_em->flush();

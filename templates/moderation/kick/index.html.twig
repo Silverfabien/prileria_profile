@@ -3,9 +3,6 @@
 {% block body %}
    <div>
       <h2 class="text-white text-center">Liste des kicks</h2>
-      {% if is_granted('ROLE_RESP') %}
-         <a class="btn btn-info d-block" href="{{ path('moderation_kick_new') }}">Kick un joueur</a>
-      {% endif %}
    </div>
    <table class="table table-responsive-lg">
       <thead class="table-dark">

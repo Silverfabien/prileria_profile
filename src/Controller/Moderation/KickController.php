@@ -63,38 +63,6 @@ class KickController extends AbstractController
 
     /**
      * @param Request $request
-     * @param UserInterface $user
-     * @return Response
-     *
-     * @Route("/new", name="new", methods={"GET", "POST"})
-     *
-     * @IsGranted("ROLE_RESP")
-     */
-    public function new(
-        Request $request,
-        UserInterface $user
-    ): Response
-    {
-        $kick = new Kick();
-        $form = $this->createForm(KickType::class, $kick)->handleRequest($request);
-
-        if ($this->kickHandler->createKickHandle($form, $kick, $user)) {
-            $this->addFlash('success', sprintf(
-                "Le kick du joueur avec l'uuid %s a bien été effectué",
-                $kick->getUuid()
-            ));
-
-            return $this->redirectToRoute('moderation_kick_index');
-        }
-
-        return $this->render('moderation/kick/new.html.twig', [
-            'form' => $form->createView(),
-            'title' => 'Ajouter un kick'
-        ]);
-    }
-
-    /**
-     * @param Request $request
      * @param Kick $kick
      * @return Response
      *
