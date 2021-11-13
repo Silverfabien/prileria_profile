@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div class="container">
+      <div class="
+         {% if ban.banState == 0 and ban.banEnd %}
+            bg-show-ban-inactive
+         {% elseif ban.banState == 1 and ban.banEnd %}
+            bg-show-ban-active
+         {% else %}
+            bg-show-ban-definitive
+         {% endif %}
+      ">
+         <h1 class="text-center">Information du ban n°{{ ban.id }}</h1>
+         <div class="row">
+            <div class="col-lg-3">
+               {% if ban.banIp %}
+                  <img src="https://cravatar.eu/head/{{ firstPlayer.uuid }}/128" alt="">
+               {% else %}
+                  <img src="https://cravatar.eu/head/{{ ban.uuid }}/128" alt="">
+               {% endif %}
+            </div>
+            <div class="col-lg-9">
+               <h4>
+                  {{ ban.uuid ? ban.uuid : firstPlayer.uuid }}
+                  <a class="btn btn-info" href="{{ path('moderation_ban_edit', {'id': ban.id}) }}">
+                     <i class="fas fa-pencil-alt"></i>
+                  </a>
+                  {{ include('moderation/ban/_delete_form.html.twig') }}
+               </h4>
+               {% if ban.banIp %}
+                  <p>
+                     <b>Ban ip :</b> {{ is_granted('ROLE_RESP') ? ban.banIp : "Ip cachée" }}
+                  </p>
+               {% endif %}
+               <p>
+                  <b>Ban le :</b> {{ ban.banBegin|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}
+               </p>
+               <p>
+                  <b>Déban le :</b> {{ ban.banEnd ? ban.banEnd|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : 'Définitif' }}
+               </p>
+            </div>
+            <hr>
+            <div class="col-12">
+               <p>
+                  <b>Pseudo(s) :</b>
+                  {% set countPlayer = 0 %}
+                  {% for player in playersByIp %}
+                     {% set countPlayer = countPlayer + 1 %}
+                     {{ countPlayer > 1 ? "/ "~player.batPlayer : player.batPlayer }}
+                  {% endfor %}
+                  {{ ban.uuid ? playerByUuid.batPlayer : "" }}
+               </p>
+               <p><b>Ban par :</b> {{ ban.banStaff }}</p>
+               <p><b>Raison :</b> {{ ban.banReason }}</p>
+               <p><b>Serveur :</b> {{ ban.banServer }}</p>
+               <p><b>Unban par :</b> {{ ban.banUnbanstaff ? ban.banUnbanstaff : '/' }}</p>
+               <p><b>Unban pour :</b> {{ ban.banUnbanreason ? ban.banUnbanreason : '/' }}</p>
+               <p><b>Unban le :</b> {{ ban.banUnbandate ? ban.banUnbandate|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : '/' }}</p>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}

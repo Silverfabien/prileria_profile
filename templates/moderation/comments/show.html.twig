@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div class="container">
+      <div class="
+         {% if comment.type == 'NOTE' %}
+            bg-show-comments-note
+         {% else %}
+            bg-show-comments-warning
+         {% endif %}
+      ">
+         <h1 class="text-center">Information du ban n°{{ comment.id }}</h1>
+         <div class="row">
+            <div class="col-lg-3">
+               <img src="https://cravatar.eu/head/{{ comment.entity }}/128" alt="">
+            </div>
+            <div class="col-lg-9">
+               <h4>
+                  {{ comment.entity }}
+                  <a class="btn btn-info" href="{{ path('moderation_comments_edit', {'id': comment.id}) }}">
+                     <i class="fas fa-pencil-alt"></i>
+                  </a>
+                  {{ include('moderation/comments/_delete_form.html.twig') }}
+               </h4>
+               <p>
+                  <b>Ban le :</b> {{ comment.date|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}
+               </p>
+               <p>
+                  <b>Type :</b> {{ comment.type|capitalize }}
+               </p>
+            </div>
+            <hr>
+            <div class="col-12">
+               <p><b>Pseudo :</b> {{ playerByUuid.batPlayer}}</p>
+               <p><b>Ban par :</b> {{ comment.staff }}</p>
+               <p><b>Raison :</b> {{ comment.note }}</p>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}

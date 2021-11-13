@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div class="container">
+      <div class="
+         {% if mute.muteState == 0 and mute.muteEnd %}
+            bg-show-mute-inactive
+         {% elseif mute.muteState == 1 and mute.muteEnd %}
+            bg-show-mute-active
+         {% else %}
+            bg-show-mute-definitive
+         {% endif %}
+      ">
+         <h1 class="text-center">Information du mute n°{{ mute.id }}</h1>
+         <div class="row">
+            <div class="col-lg-3">
+               {% if mute.muteIp %}
+                  <img src="https://cravatar.eu/head/{{ firstPlayer.uuid }}/128" alt="">
+               {% else %}
+                  <img src="https://cravatar.eu/head/{{ mute.uuid }}/128" alt="">
+               {% endif %}
+            </div>
+            <div class="col-lg-9">
+               <h4>
+                  {{ mute.uuid ? mute.uuid : firstPlayer.uuid }}
+                  <a class="btn btn-info" href="{{ path('moderation_ban_edit', {'id': mute.id}) }}">
+                     <i class="fas fa-pencil-alt"></i>
+                  </a>
+                  {{ include('moderation/mute/_delete_form.html.twig') }}
+               </h4>
+               {% if mute.muteIp %}
+                  <p>
+                     <b>Mute ip :</b> {{ is_granted('ROLE_RESP') ? mute.muteIp : "Ip cachée" }}
+                  </p>
+               {% endif %}
+               <p>
+                  <b>Mute le :</b> {{ mute.muteBegin|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}
+               </p>
+               <p>
+                  <b>Démute le :</b> {{ mute.muteEnd ? mute.muteEnd|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : 'Définitif' }}
+               </p>
+            </div>
+            <hr>
+            <div class="col-12">
+               <p>
+                  <b>Pseudo(s) :</b>
+                  {% set countPlayer = 0 %}
+                  {% for player in playersByIp %}
+                     {% set countPlayer = countPlayer + 1 %}
+                     {{ countPlayer > 1 ? "/ "~player.batPlayer : player.batPlayer }}
+                  {% endfor %}
+                  {{ mute.uuid ? playerByUuid.batPlayer : "" }}
+               </p>
+               <p><b>Mute par :</b> {{ mute.muteStaff }}</p>
+               <p><b>Raison :</b> {{ mute.muteReason }}</p>
+               <p><b>Serveur :</b> {{ mute.muteServer }}</p>
+               <p><b>Unmute par :</b> {{ mute.muteUnmutestaff ? mute.muteUnmutestaff : '/' }}</p>
+               <p><b>Unmute pour :</b> {{ mute.muteUnmutereason ? mute.muteUnmutereason : '/' }}</p>
+               <p><b>Unmute le :</b> {{ mute.muteUnmutedate ? mute.muteUnmutedate|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : '/' }}</p>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}

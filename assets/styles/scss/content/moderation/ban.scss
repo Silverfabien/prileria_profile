@@ -1,0 +1,60 @@
+// Variable =====>
+$bg-ban-active: #e87a7a;
+$bg-demo-ban-active: #ce5858;
+$bg-show-ban-active: #aa3333;
+$bg-ban-inactive: #a0d6b0;
+$bg-demo-ban-inactive: #71b687;
+$bg-show-ban-inactive: #5eb5e0;
+$bg-ban-definitive: #808080;
+$bg-demo-ban-definitive: #606060;
+$bg-show-ban-definitive: #b2b2b2;
+// <===== Variable
+
+.bg-table-ban-active {
+  background-color: $bg-ban-active!important;
+}
+
+.bg-table-ban-inactive {
+  background-color: $bg-ban-inactive!important;
+}
+
+.bg-table-ban-definitive {
+  background-color: $bg-ban-definitive!important;
+}
+
+.text-demo-table {
+  @include text-demo-table;
+
+  .bg-demo-table-ban-active {
+    background-color: $bg-ban-active;
+    @include bg-border-demo-table($bg-demo-ban-active);
+    @include mixin-demo-table-first;
+  }
+
+  .bg-demo-table-ban-inactive {
+    background-color: $bg-ban-inactive;
+    @include bg-border-demo-table($bg-demo-ban-inactive);
+    @include mixin-demo-table-second;
+  }
+
+  .bg-demo-table-ban-definitive {
+    background-color: $bg-ban-definitive;
+    @include bg-border-demo-table($bg-demo-ban-definitive);
+    @include mixin-demo-table-second;
+  }
+}
+
+.bg-show-ban-active {
+  @include padding-show;
+  background-color: $bg-show-ban-active;
+}
+
+.bg-show-ban-inactive {
+  @include padding-show;
+  background-color: $bg-show-ban-inactive;
+}
+
+.bg-show-ban-definitive {
+  @include padding-show;
+  background-color: $bg-show-ban-definitive;
+}

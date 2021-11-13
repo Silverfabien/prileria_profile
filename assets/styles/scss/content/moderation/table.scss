@@ -1,0 +1,42 @@
+// Mixin =====>
+@mixin mixin-demo-table-first {
+  padding: 0 15px;
+  margin-right: 5px;
+}
+
+@mixin mixin-demo-table-second {
+  padding: 0 15px;
+  margin-right: 5px;
+  margin-left: 10px;
+}
+
+@mixin bg-border-demo-table($bg-color) {
+  border: 2px solid $bg-color;
+}
+// <===== Mixin
+
+@mixin text-demo-table {
+  color: white;
+}
+
+@mixin padding-show {
+  padding: 10px 15px;
+}
+
+a {
+  text-decoration: none;
+  color: #212529;
+  transition: all 0.5s ease;
+
+  &:hover {
+    color: #E47A29;
+  }
+}
+
+.table-btn-action {
+  min-width: 103px;
+}
+
+.table-btn-action-delete {
+  display: inline-block;
+}

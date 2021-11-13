@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div>
+      <h2 class="text-white text-center">Liste des Reports</h2>
+   </div>
+   <table class="table table-responsive-lg">
+      <thead class="table-dark">
+         <tr class="text-center">
+            <th>Id</th>
+            <th>Raison</th>
+            <th>Signaleur</th>
+            <th>Signalé</th>
+            <th>Date</th>
+         </tr>
+      </thead>
+      <tbody>
+      {% for report in reports %}
+         <tr class="bg-light text-center align-middle
+            {% if report.appreciation|replace({'/': ' '})|truncate(4, true, '') == "True" %}
+               {{ report.archived == 1 ? 'bg-table-report-true-archived' : 'bg-table-report-true' }}
+            {% elseif report.appreciation == "False" %}
+               {{ report.archived == 1 ? 'bg-table-report-false-archived' : 'bg-table-report-false' }}
+            {% elseif report.appreciation == "Uncertain" %}
+               {{ report.archived == 1 ? 'bg-table-report-uncertain-archived' : 'bg-table-report-uncertain' }}
+            {% endif %}
+         ">
+            <th>{{ report.id }}</th>
+            <th>
+               <a href="{{ path('moderation_report_show', {'id': report.id}) }}">{{ report.reason }}</a>
+            </th>
+            <th>
+               {% set replaceReporterUuid = report.reporterUuid|replace({'-': ''}) %}
+               {% set splitReporterUuid = "" %}
+               {% set reportersUuid = "" %}
+               {% if replaceReporterUuid|length > 32 %}
+                  {% set splitReporterUuid = replaceReporterUuid|split(',', 32) %}
+               {% endif %}
+               <img class="d-inline-block" src="https://cravatar.eu/head/{{ splitReporterUuid ? splitReporterUuid|first : report.reporterUuid }}/32" alt="">
+               <a class="d-block" href="#">
+                  {% set firstSplitReporterUuid = splitReporterUuid|first %}
+                  {% set countReporterUuid = -1 %}
+                  {% for nbReporterUuid in splitReporterUuid %}
+                     {% set countReporterUuid = countReporterUuid + 1 %}
+                  {% endfor %}
+                  {% for player in players  %}
+                     {{ replaceReporterUuid == player.uuid ? player.batPlayer : '' }}
+                     {{ firstSplitReporterUuid == player.uuid ? player.batPlayer : '' }}
+                  {% endfor %}
+               </a>
+               {{ countReporterUuid == 1 ? '+1 joueur' : '' }}
+               {{ countReporterUuid > 1 ? '+'~countReporterUuid~' joueurs' : '' }}
+            </th>
+            <th>
+               <img class="d-inline-block" src="https://cravatar.eu/head/{{ report.reportedUuid }}/32" alt="">
+               <a class="d-block" href="#">
+                  {% set replaceReportedUuid = report.reportedUuid|replace({'-': ''}) %}
+                  {% for player in players %}
+                     {{ replaceReportedUuid == player.uuid ? player.batPlayer : '' }}
+                  {% endfor %}
+               </a>
+            </th>
+            <th>{{ report.date }}</th>
+         </tr>
+      {% else %}
+         <tr>
+            <td colspan="13">Aucune sanction actuellement</td>
+         </tr>
+      {% endfor %}
+      </tbody>
+   </table>
+   <div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-report-true-archived"></span> Report valide archivé</div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-report-true"></span> Report valide</div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-report-false-archived"></span> Report non valide archivé</div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-report-false"></span> Report non valide</div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-report-uncertain-archived"></span> Report incertain archivé</div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-report-uncertain"></span> Report incertain</div>
+   </div>
+   <div class="navigation justify-content-center">
+      {{ knp_pagination_render(reports, 'components/pagination.html.twig') }}
+   </div>
+{% endblock %}

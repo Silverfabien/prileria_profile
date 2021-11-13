@@ -1,0 +1,42 @@
+// Variable =====>
+$bg-comments-note: #9dd2dd;
+$bg-demo-comments-note: #6aadbb;
+$bg-show-comments-note: #9dd2dd;
+$bg-comments-warning: #e9b166;
+$bg-demo-comments-warning: #c58e3f;
+$bg-show-comments-warning: #e9b166;
+// <===== Variable
+
+.bg-table-comments-note {
+  background-color: $bg-comments-note!important;
+}
+
+.bg-table-comments-warning {
+  background-color: $bg-comments-warning!important;
+}
+
+.text-demo-table {
+  @include text-demo-table;
+
+  .bg-demo-table-comments-note {
+    background-color: $bg-comments-note;
+    @include bg-border-demo-table($bg-demo-comments-note);
+    @include mixin-demo-table-first;
+  }
+
+  .bg-demo-table-comments-warning {
+    background-color: $bg-comments-warning;
+    @include bg-border-demo-table($bg-demo-comments-warning);
+    @include mixin-demo-table-second;
+  }
+}
+
+.bg-show-comments-note {
+  @include padding-show;
+  background-color: $bg-show-comments-note;
+}
+
+.bg-show-comments-warning {
+  @include padding-show;
+  background-color: $bg-show-comments-warning;
+}

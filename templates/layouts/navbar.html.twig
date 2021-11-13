@@ -1,17 +1,17 @@
 <nav class="myNav">
    <ul id="navList" class="navList navListLeft">
       <li class="navLinks">
-         <a href="#">Accueil</a>
+         <a href="{{ path('default') }}">Accueil</a>
       </li>
       {% if app.user and is_granted('ROLE_STAFF') %}
          <li class="navLinks dropdown">
             <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Modération</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-               <a class="dropdown-item" href="#">Ban</a>
-               <a class="dropdown-item" href="#">Mute</a>
-               <a class="dropdown-item" href="#">Kick</a>
-               <a class="dropdown-item" href="#">Warn / Note</a>
-               <a class="dropdown-item" href="#">Report</a>
+               <a class="dropdown-item" href="{{ path('moderation_ban_index') }}">Ban</a>
+               <a class="dropdown-item" href="{{ path('moderation_mute_index') }}">Mute</a>
+               <a class="dropdown-item" href="{{ path('moderation_kick_index') }}">Kick</a>
+               <a class="dropdown-item" href="{{ path('moderation_comments_index') }}">Warn / Note</a>
+               <a class="dropdown-item" href="{{ path('moderation_report_index') }}">Report</a>
             </div>
          </li>
       {% endif %}

@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div>
+      <h2 class="text-white text-center">Liste des bans</h2>
+      {% if is_granted('ROLE_RESP') %}
+         <a class="btn btn-info d-block" href="{{ path('moderation_ban_new') }}">Bannir un joueur</a>
+      {% endif %}
+   </div>
+   <table class="table table-responsive-lg">
+      <thead class="table-dark">
+         <tr class="text-center">
+            <th>Pseudo / Ip</th>
+            <th>Serveur</th>
+            <th>Raison</th>
+            <th>Staff</th>
+            <th>Date</th>
+            <th>Date Unban</th>
+            <th>État</th>
+            <th>Date Unban</th>
+            <th>Staff Unban</th>
+            <th>Raison Unban</th>
+            <th>Action</th>
+         </tr>
+      </thead>
+      <tbody>
+         {% for ban in bans %}
+            {% set batPlayer = "" %}
+            {% set countPlayerByIp = -1 %}
+            {% set playerByBanIp = "" %}
+            {% set playerByBanUuid = "" %}
+            {% for player in players %}
+               {% if ban.uuid == player.uuid %}
+                  {% set batPlayer = player.batPlayer %}
+               {% endif %}
+               {% if ban.banIp == player.lastip %}
+                  {% set countPlayerByIp = countPlayerByIp + 1 %}
+               {% endif %}
+               {% if ban.banIp == player.lastip %}
+                  {% if countPlayerByIp < 1 %}
+                     {% set playerByBanIp = player.batPlayer %}
+                  {% endif %}
+                  {% set playerByBanUuid = player.uuid %}
+               {% endif %}
+            {% endfor %}
+            <tr class="bg-light text-center align-middle
+               {% if ban.banState == 0 and ban.banEnd %}
+                  bg-table-ban-inactive
+               {% elseif ban.banState == 1 and ban.banEnd %}
+                  bg-table-ban-active
+               {% else %}
+                  bg-table-ban-definitive
+               {% endif %}
+            ">
+               <th>
+                  {% if ban.banIp %}
+                     <img class="d-inline-block" src="https://cravatar.eu/head/{{ playerByBanUuid }}/32" alt="">
+                     <a class="d-block" href="#">{{ playerByBanIp }}</a>
+                     {% if is_granted('ROLE_RESP') %}
+                        {{ ban.banIp }}
+                        {% if countPlayerByIp == 1 %}
+                           + 1 compte
+                        {% elseif countPlayerByIp > 1 %}
+                           + {{ countPlayerByIp }} comptes
+                        {% endif %}
+                     {% else %}
+                        Adresse Ip Caché
+                     {% endif %}
+                  {% else %}
+                     <img class="d-inline-block" src="https://cravatar.eu/head/{{ ban.uuid }}/32" alt="">
+                     <a class="d-block" href="#">{{ batPlayer }}</a>
+                  {% endif %}
+               </th>
+               <th>{{ ban.banServer }}</th>
+               <th>
+                  <a href="{{ path('moderation_ban_show', {'id': ban.id}) }}">{{ ban.banReason ? ban.banReason : '/' }}</a>
+               </th>
+               <th>{{ ban.banStaff }}</th>
+               <th>{{ ban.banBegin|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
+               <th>{{ ban.banEnd ? ban.banEnd|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : 'Définitif' }}</th>
+               <th>{{ ban.banState ? 'Actif' : 'Inactif' }}</th>
+               <th>{{ ban.banUnbandate ? ban.banUnbandate|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : '/' }}</th>
+               <th>{{ ban.banUnbanstaff ? ban.banUnbanstaff : '/' }}</th>
+               <th>{{ ban.banUnbanreason ? ban.banUnbanreason : '/' }}</th>
+               <th class="table-btn-action">
+                  <a class="btn btn-info" href="{{ path('moderation_ban_edit', {'id': ban.id}) }}">
+                     <i class="fas fa-pencil-alt"></i>
+                  </a>
+                  {{ include('moderation/ban/_delete_form.html.twig') }}
+               </th>
+            </tr>
+         {% else %}
+            <tr>
+               <td colspan="13">Aucune sanction actuellement</td>
+            </tr>
+         {% endfor %}
+      </tbody>
+   </table>
+   <div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-ban-active"></span> Ban Actif</div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-ban-inactive"></span> Ban Inactif</div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-ban-definitive"></span> Ban Définitif</div>
+   </div>
+   <div class="navigation justify-content-center">
+      {{ knp_pagination_render(bans, 'components/pagination.html.twig') }}
+   </div>
+{% endblock %}

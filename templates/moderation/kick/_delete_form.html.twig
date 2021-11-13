@@ -1,0 +1,5 @@
+<form class="table-btn-action-delete" method="post" action="{{ path('moderation_kick_delete', {'id': kick.id}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer ce kick ?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ kick.id) }}">
+    <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+</form>

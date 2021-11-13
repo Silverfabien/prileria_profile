@@ -1,0 +1,13 @@
+// Variable =====>
+$bg-kick: #9daedd;
+$bg-show-kick: #9daedd;
+// <===== Variable
+
+.bg-table-kick {
+  background-color: $bg-kick!important;
+}
+
+.bg-show-kick {
+  @include padding-show;
+  background-color: $bg-show-kick;
+}

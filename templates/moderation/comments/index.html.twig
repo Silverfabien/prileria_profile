@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div>
+      <h2 class="text-white text-center">Liste des Warns/Notes</h2>
+      {% if is_granted('ROLE_RESP') %}
+         <a class="btn btn-info d-block" href="{{ path('moderation_comments_new') }}">Warn/Note un joueur</a>
+      {% endif %}
+   </div>
+   <table class="table table-responsive-lg">
+      <thead class="table-dark">
+      <tr class="text-center">
+         <th>Pseudo</th>
+         <th>Raison</th>
+         <th>Staff</th>
+         <th>Date</th>
+         <th>Type</th>
+         <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for comment in comments %}
+         {% set batPlayer = "" %}
+         {% for player in players %}
+            {% if comment.entity == player.uuid %}
+               {% set batPlayer = player.batPlayer %}
+            {% endif %}
+         {% endfor %}
+         <tr class="bg-light text-center align-middle
+            {% if comment.type == "NOTE" %}
+               bg-table-comments-note
+            {% else %}
+               bg-table-comments-warning
+            {% endif %}
+         ">
+            <th>
+               <img class="d-inline-block" src="https://cravatar.eu/head/{{ comment.entity }}/32" alt="">
+               <a class="d-block" href="#">{{ batPlayer }}</a>
+            </th>
+            <th>
+               <a href="{{ path('moderation_comments_show', {'id': comment.id}) }}">{{ comment.note }}</a>
+            </th>
+            <th>{{ comment.staff }}</th>
+            <th>{{ comment.date|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
+            <th>{{ comment.type|capitalize }}</th>
+            <th class="table-btn-action">
+               <a class="btn btn-info" href="{{ path('moderation_comments_edit', {'id': comment.id}) }}">
+                  <i class="fas fa-pencil-alt"></i>
+               </a>
+               {{ include('moderation/comments/_delete_form.html.twig') }}
+            </th>
+         </tr>
+      {% else %}
+         <tr>
+            <td colspan="13">Aucune sanction actuellement</td>
+         </tr>
+      {% endfor %}
+      </tbody>
+   </table>
+   <div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-comments-note"></span> Note</div>
+      <div class="d-inline-block text-demo-table"><span class="bg-demo-table-comments-warning"></span> Warning</div>
+   </div>
+   <div class="navigation justify-content-center">
+      {{ knp_pagination_render(comments, 'components/pagination.html.twig') }}
+   </div>
+{% endblock %}
