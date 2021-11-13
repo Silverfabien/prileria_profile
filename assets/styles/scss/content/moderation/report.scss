@@ -1,0 +1,111 @@
+// Variable =====>
+$bg-report-true: #62d052;
+$bg-demo-report-true: #37a629;
+$bg-report-true-archived: #8ab984;
+$bg-demo-report-true-archived: #5e8a59;
+$bg-report-false: #eeb52d;
+$bg-demo-report-false: #c28e11;
+$bg-report-false-archived: #c8b588;
+$bg-demo-report-false-archived: #9b8858;
+$bg-report-uncertain: #f83136;
+$bg-demo-report-uncertain: #c21216;
+$bg-report-uncertain-archived: #de7c7f;
+$bg-demo-report-uncertain-archived: #a14144;
+$bg-show-report: #9daedd;
+// <===== Variable
+
+.bg-table-report-true-archived {
+  background-color: $bg-report-true-archived!important;
+}
+
+.bg-table-report-true {
+  background-color: $bg-report-true!important;
+}
+
+.bg-table-report-false-archived {
+  background-color: $bg-report-false-archived!important;
+}
+
+.bg-table-report-false {
+  background-color: $bg-report-false!important;
+}
+
+.bg-table-report-uncertain-archived {
+  background-color: $bg-report-uncertain-archived!important;
+}
+
+.bg-table-report-uncertain {
+  background-color: $bg-report-uncertain!important;
+}
+
+.text-demo-table {
+  @include text-demo-table;
+
+  .bg-demo-table-report-true-archived {
+    background-color: $bg-report-true-archived;
+    @include bg-border-demo-table($bg-demo-report-true-archived);
+    @include mixin-demo-table-first;
+  }
+
+  .bg-demo-table-report-true {
+    background-color: $bg-report-true;
+    @include bg-border-demo-table($bg-demo-report-true);
+    @include mixin-demo-table-first;
+  }
+
+  .bg-demo-table-report-false-archived {
+    background-color: $bg-report-false-archived;
+    @include bg-border-demo-table($bg-demo-report-false-archived);
+    @include mixin-demo-table-first;
+  }
+
+  .bg-demo-table-report-false {
+    background-color: $bg-report-false;
+    @include bg-border-demo-table($bg-demo-report-false);
+    @include mixin-demo-table-first;
+  }
+
+  .bg-demo-table-report-uncertain-archived {
+    background-color: $bg-report-uncertain-archived;
+    @include bg-border-demo-table($bg-demo-report-uncertain-archived);
+    @include mixin-demo-table-first;
+  }
+
+  .bg-demo-table-report-uncertain {
+    background-color: $bg-report-uncertain;
+    @include bg-border-demo-table($bg-demo-report-uncertain);
+    @include mixin-demo-table-first;
+  }
+}
+
+.bg-show-report {
+  @include padding-show;
+  background-color: $bg-show-report;
+
+  .bd-show-report-left {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+  }
+
+  .bd-show-report-right {
+    border-top: 1px solid black;
+  }
+
+  .bd-show-report-title {
+    border-bottom: 1px solid black;
+    padding: 5px 0;
+  }
+
+  .col-lg-6 {
+    padding-left: 0!important;
+    padding-right: 0!important;
+
+    .bd-show-report-separate {
+      border-bottom: 1px solid black;
+    }
+
+    .col-lg-4 {
+      min-height: 150px;
+    }
+  }
+}

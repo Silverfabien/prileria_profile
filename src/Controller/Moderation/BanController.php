@@ -37,6 +37,10 @@ class BanController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     *
      * @Route("/", name="index", methods={"GET"})
      */
     public function index(

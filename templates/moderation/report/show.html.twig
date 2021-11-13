@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div class="container">
+      <div class="bg-show-report">
+         <h1 class="text-center">Information du report n°{{ report.id }}</h1>
+         <h4 class="text-center"><b>Date :</b> {{ report.date }}</h4>
+         <h4 class="text-center">
+            {{ report.status != 'none' ? 'Traité par' : 'Pas encore traité' }}
+            {% if report.status != 'none' %}
+               {% for player in players %}
+                  <b>{{ report.status|replace({'Done by ' : '', '-' : ''}) == player.uuid ? player.batPlayer : '' }}</b>
+               {% endfor %}
+            {% endif %}
+         </h4>
+         <h4 class="text-center">
+            <b>Sanction appliqué :</b>
+            {% if report.appreciation != 'True' and report.appreciation != 'False' and report.appreciation != 'Uncertain' %}
+               {{ report.appreciation|replace({'True/': ' '})|title }}
+            {% else %}
+               Aucune
+            {% endif %}
+         </h4>
+         <div class="row">
+            <div class="col-lg-6 bd-show-report-left">
+               <h4 class="text-center bd-show-report-title">Signaleur</h4>
+               <div class="row m-0 p-0">
+                  <div class="col-lg-4 bd-show-report-separate">
+                     {% set replaceReporterUuid = report.reporterUuid|replace({'-': ''}) %}
+                     {% set splitReporterUuid = "" %}
+                     {% if replaceReporterUuid|length > 32 %}
+                        {% set splitReporterUuid = replaceReporterUuid|split(',', 32) %}
+                     {% endif %}
+                     <img class="d-inline-block" src="https://cravatar.eu/head/{{ splitReporterUuid ? splitReporterUuid|first : report.reporterUuid }}/128" alt="">
+                  </div>
+                  <div class="col-lg-8 bd-show-report-separate">
+                     <p>
+                        <b>Signaleur : </b>
+                        {% if splitReporterUuid %}
+                           {% set countReporterUuid = 0 %}
+                           {% for reporterUuid in splitReporterUuid %}
+                              {% set countReporterUuid = countReporterUuid + 1 %}
+                              {% for player in players %}
+                                 {% if countReporterUuid > 1 %}
+                                    {{ reporterUuid == player.uuid ? '/ '~player.batPlayer : '' }}
+                                 {% else %}
+                                    {{ splitReporterUuid|first == player.uuid ? player.batPlayer : '' }}
+                                 {% endif %}
+                              {% endfor%}
+                           {% endfor %}
+                        {% else %}
+                           {% for player in players  %}
+                              {{ replaceReporterUuid == player.uuid ? player.batPlayer : '' }}
+                           {% endfor %}
+                        {% endif %}
+                     </p>
+                     <p><b>Ip :</b> {{ report.reporterIp }}</p>
+                     {% set splitReporterLocation = report.reporterLocation|split('/') %}
+                     <p><b>Serveur:</b> {{ splitReporterLocation[0] }}</p>
+                     <p>
+                        <b>Coordonné :</b>
+                        <b>X:</b> {{ splitReporterLocation[2] }}
+                        <b>Y:</b> {{ splitReporterLocation[3] }}
+                        <b>Z:</b> {{ splitReporterLocation[4] }}
+                     </p>
+                  </div>
+                  <div class="col-lg-12 pt-3">
+                     <p><b>Raison :</b> {{ report.reason }}</p>
+                     {% set reporterMessages = report.reporterMessages|replace({'#next#': '<br>'}) %}
+                     <b>Message : </b>
+                     <p>{{ reporterMessages ? reporterMessages|raw : 'Pas de message' }}</p>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-6 bd-show-report-right">
+               <h4 class="text-center bd-show-report-title">Signalé</h4>
+               <div class="row m-0 p-0">
+                  <div class="col-lg-4 bd-show-report-separate">
+                     <img class="d-inline-block" src="https://cravatar.eu/head/{{ report.reportedUuid }}/128" alt="">
+                  </div>
+                  <div class="col-lg-8 bd-show-report-separate">
+                     <p>
+                        <b>Signaleur :</b>
+                        {% set replaceReportedUuid = report.reportedUuid|replace({'-': ''}) %}
+                        {% for player in players %}
+                           {{ replaceReportedUuid == player.uuid ? player.batPlayer : '' }}
+                        {% endfor %}
+                     </p>
+                     <p><b>Ip :</b> {{ report.reportedIp }}</p>
+                     {% set splitReportedLocation = report.reportedLocation|split('/') %}
+                     <p><b>Serveur:</b> {{ splitReportedLocation[0] }}</p>
+                     <p>
+                        <b>Coordonné :</b>
+                        <b>X:</b> {{ splitReportedLocation[2] }}
+                        <b>Y:</b> {{ splitReportedLocation[3] }}
+                        <b>Z:</b> {{ splitReportedLocation[4] }}
+                     </p>
+                  </div>
+                  <div class="col-lg-12 pt-3">
+                     <table class="table table-responsive-lg">
+                        <thead class="table-dark">
+                        <tr class="text-center">
+                           <th>Gamemode</th>
+                           <th>Au sol</th>
+                           <th>Sneak</th>
+                           <th>Sprint</th>
+                           <th>Health</th>
+                           <th>Food</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="bg-light text-center align-middle">
+                           <td>{{ report.reportedGamemode }}</td>
+                           <td>{{ report.reportedOnGround ? 'Oui' : 'Non' }}</td>
+                           <td>{{ report.reportedSneak ? 'Oui' : 'Non' }}</td>
+                           <td>{{ report.reportedSprint ? 'Oui' : 'Non' }}</td>
+                           <td>{{ report.reportedHealth }}</td>
+                           <td>{{ report.reportedFood }}</td>
+                        </tr>
+                        </tbody>
+                     </table>
+                     {% set reportedMessages = report.reportedMessages|replace({'#next#': '<br>'}) %}
+                     <b>Message : </b>
+                     <p>{{ reportedMessages ? reportedMessages|raw : 'Pas de message' }}</p>
+                     {% set reportedEffects = report.reportedEffects|replace({':': ': Niveau : ', '/': ' / Temps : ' , ',': 's<br>'}) %}
+                     <b>Effet de potion :</b>
+                     <p>{{ reportedEffects|raw }}{{ reportedEffects ? 's' : 'Aucun effet' }}</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}
