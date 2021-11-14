@@ -14,7 +14,7 @@ class UserFixtures extends Fixture
     private TokenGeneratorInterface $tokenGenerator;
 
     /**
-     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param UserPasswordHasherInterface $passwordEncoder
      * @param TokenGeneratorInterface $tokenGenerator
      */
     public function __construct(
