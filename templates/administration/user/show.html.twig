@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div class="container">
+      <div class="bg-show-ban-inactive">
+         <h1 class="text-center">Information du membre du staff {{ user.userIdentifier }}</h1>
+         <div class="row">
+            <div class="col-lg-3">
+               <img src="https://cravatar.eu/head/{{ user.userIdentifier }}/128" alt="">
+            </div>
+            <div class="col-lg-9">
+               <h4>
+                  {{ user.userIdentifier }}
+                  <a class="btn btn-info" href="{{ path('administration_user_edit', {'id': user.id}) }}">
+                     <i class="fas fa-pencil-alt"></i>
+                  </a>
+                  {{ include('administration/user/_delete_form.html.twig') }}
+               </h4>
+               <h5>{{ user.rank.rolename }}</h5>
+            </div>
+            <hr>
+            <div class="col-12">
+               <h3>Détails administratif</h3>
+               <table class="table table-responsive-lg">
+                  <thead class="table-dark">
+                     <tr class="text-center">
+                        <th>Ban</th>
+                        <th>Mute</th>
+                        <th>Kick</th>
+                        <th>Warn</th>
+                        <th>Note</th>
+                        <th>Report traité</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr class="text-center bg-light">
+                        <td>{{ nbBan }}</td>
+                        <td>{{ nbMute }}</td>
+                        <td>{{ nbKick }}</td>
+                        <td>{{ nbCommentWarning }}</td>
+                        <td>{{ nbCommentNote }}</td>
+                        <td>
+                           {% set nbReport = 0 %}
+                           {% if player %}
+                              {% for report in reports %}
+                                 {% if report.status|replace({'Done by ': '', '-': ''}) == player.uuid %}
+                                    {% set nbReport = nbReport + 1 %}
+                                 {% endif %}
+                              {% endfor %}
+                              {{ nbReport }}
+                           {% else %}
+                              0
+                           {% endif %}
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        <h2 class="text-white text-center">Liste des membres du staff</h2>
+        <a class="btn btn-info d-block" href="{{ path('administration_user_new') }}">Ajouter un membre du staff</a>
+    </div>
+    <table class="table table-responsive-lg">
+        <thead class="table-dark">
+        <tr class="text-center">
+            <th>Pseudo</th>
+            <th>Roles</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr class="bg-light text-center align-middle bg-table-user">
+                <th>
+                    <img class="d-inline-block" src="https://cravatar.eu/head/{{ user.userIdentifier }}/32" alt="">
+                    <a class="d-block" href="{{ path('administration_user_show', {'id': user.id}) }}">{{ user.userIdentifier }}</a>
+                </th>
+                <th>{{ user.rank.rolename }}</th>
+                <th class="table-btn-action">
+                    <a class="btn btn-info" href="{{ path('administration_user_edit', {'id': user.id}) }}">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <a class="btn btn-info" href="{{ path('administration_user_edit_password', {'id': user.id}) }}">
+                        <i class="fas fa-lock"></i>
+                    </a>
+                    {{ include('administration/user/_delete_form.html.twig') }}
+                </th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

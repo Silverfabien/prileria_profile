@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=CommentsRepository::class)
  *
- * @ORM\Table(name="`BAT_comments`")
+ * @ORM\Table(name="`bat_comments`")
  */
 class Comments
 {

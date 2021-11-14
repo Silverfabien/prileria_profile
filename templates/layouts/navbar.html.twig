@@ -28,7 +28,7 @@
                <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   {% if is_granted('ROLE_ADMIN') %}
-                     <a class="dropdown-item" href="#">Gestion utilisateur</a>
+                     <a class="dropdown-item" href="{{ path('administration_user_index') }}">Gestion utilisateur</a>
                      <a class="dropdown-item" href="#">Gestion des grades</a>
                   {% endif %}
                   <a class="dropdown-item" href="#">Liste des joueurs</a>
