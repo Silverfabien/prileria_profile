@@ -43,7 +43,7 @@
                   {% for nbReporterUuid in splitReporterUuid %}
                      {% set countReporterUuid = countReporterUuid + 1 %}
                   {% endfor %}
-                  {% for player in players  %}
+                  {% for player in players %}
                      {{ replaceReporterUuid == player.uuid ? player.batPlayer : '' }}
                      {{ firstSplitReporterUuid == player.uuid ? player.batPlayer : '' }}
                   {% endfor %}

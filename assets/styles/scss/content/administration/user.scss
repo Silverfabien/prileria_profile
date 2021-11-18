@@ -1,5 +1,11 @@
 $bg-user: #5eb5e0;
+$bg-show-user: #9daedd;
 
 .bg-table-user {
   background-color: $bg-user!important;
+}
+
+.bg-show-user {
+  @include padding-show;
+  background-color: $bg-show-user;
 }

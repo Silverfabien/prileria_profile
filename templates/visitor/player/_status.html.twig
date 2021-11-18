@@ -1,0 +1,58 @@
+{% if not app.user %}
+   <div class="row">
+      <div id="option">
+         <h3>Option :</h3>
+         <button id="btn-signalement" class="btn btn-dark btn-lg">Signaler ce joueur</button>
+         <div id="signalement" class="hidden player-signalement">
+            <p class="option-signalement">
+               Vous pouvez signaler cet utilisateur sur Minecraft en exécutant la commande suivante
+               <code class="code-report">/report {{ player.batPlayer }} (Raison)</code>.
+            </p>
+            <p>
+               Ou signaler cet utilisateur depuis l'espace
+               <a href="https://prileria.net/support">support technique</a> sur le site de Prileria.
+            </p>
+         </div>
+      </div>
+   </div>
+   <div class="historique row">
+      <h5>Historique :</h5>
+      {% if nbBan > 0 %}
+         <div class="col-sm-4 player-view-frame text-center">
+            <p class="frame-view-ban">
+               Cet utilisateur a déjà été banni de nos serveur de jeux.
+            </p>
+         </div>
+      {% endif %}
+      {% if nbMute > 0 %}
+         <div class="col-sm-4 player-view-frame text-center">
+            <p class="frame-view-mute">
+               Cet utilisateur a déjà été mute de nos serveur de jeux.
+            </p>
+         </div>
+      {% endif %}
+      {% if nbWarning > 0 %}
+         <div class="col-sm-4 player-view-frame text-center">
+            <p class="frame-view-warning">
+               Cet utilisateur a déjà reçu un avertissements sur nos serveur de jeux.
+            </p>
+         </div>
+      {% endif %}
+      {% if nbBan == 0 and nbMute == 0 and nbWarning == 0 %}
+         <div class="col-md-3 col-sm-4 player-view-frame text-center">
+            <p class="frame-view-true">
+               {{ random([
+                  'Les personnes les plus gentilles sont les plus riches.',
+                  'Au regard de toute la méchanceté du monde, la gentillesse est précieuse.',
+                  'Cela peut être sympa d\'être quelqu\'un d\'important.',
+                  'C\'est important d\'être quelqu\'un de sympa',
+                  'Ta gentillesse est bien plus grande que cette simple affiche.',
+                  'Merci d\'être si gentil au quotidien !',
+                  'Une personne gentille, c\'est quelqu\'un qui a compris la vie !',
+                  'Si simple d\'être sage comme une image !'
+               ]) }}
+            </p>
+         </div>
+      {% endif %}
+   </div>
+{% endif %}

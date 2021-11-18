@@ -1,0 +1,145 @@
+$bg-show-player: #5eb5e0;
+$frame-ban: #aa3333;
+$border-frame-ban: #8d0000;
+$frame-mute: #0000ff;
+$border-frame-mute: #00008b;
+$frame-true: #008000;
+$border-frame-true: #006400;
+$bg-frame-view-ban: #b00000;
+$bg-frame-view-mute: #0064fe;
+$bg-frame-view-warning: #ff7200;
+$bg-frame-view-true: #06bc00;
+$panel-warning: #8a6d3b;
+$bg-panel-warning: #fcf8e3;
+$border-panel-warning: #feebcc;
+$panel-info: #31708f;
+$bg-panel-info: #d9edf7;
+$border-panel-info: #bce8f1;
+$fa-arrow-down: #ffd700;
+$fa-arrow-down-hover: #daa520;
+
+.bg-show-player {
+  @include padding-show;
+  background-color: $bg-show-player!important;
+
+  .row {
+    margin-right: 0;
+    margin-left: 0;
+
+    .player-frame p {
+      border-radius: 15px;
+      padding: 15px;
+      font-size: 20px;
+      color: white;
+
+      &.frame-ban {
+        background-color: $frame-ban;
+        border: 3px solid $border-frame-ban;
+      }
+
+      &.frame-mute {
+        background-color: $frame-mute;
+        border: 3px solid $border-frame-mute;
+      }
+
+      &.frame-true {
+        background-color: $frame-true;
+        border: 3px solid $border-frame-true;
+      }
+    }
+
+    #btn-signalement {
+      width: auto;
+    }
+
+    .hidden {
+      display: none;
+      padding-top: 10px;
+    }
+  }
+
+  .player-view-frame p {
+    border-radius: 25px;
+    padding: 5px;
+    color: white;
+    font-size: 12px;
+    margin-top: 15px;
+
+    &.frame-view-ban {
+      background-color: $bg-frame-view-ban;
+      border: 2px solid black;
+    }
+
+    &.frame-view-mute {
+      background-color: $bg-frame-view-mute;
+      border: 2px solid black;
+    }
+
+    &.frame-view-warning {
+      background-color: $bg-frame-view-warning;
+      border: 2px solid black;
+    }
+
+    &.frame-view-true {
+      background-color: $bg-frame-view-true;
+      border: 2px solid black;
+    }
+  }
+
+  .panel {
+    margin-bottom: 20px;
+    background-color: white;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+
+    &.panel-warning {
+      color: $panel-warning;
+      background-color: $bg-panel-warning;
+      border-color: $border-panel-warning;
+
+      .panel-btn {
+        color: $panel-warning;
+        font-weight: bold;
+      }
+    }
+
+    &.panel-info {
+      color: $panel-info;
+      background-color: $bg-panel-info;
+      border-color: $border-panel-info;
+
+      .panel-btn {
+        color: $panel-info;
+        font-weight: bold;
+      }
+    }
+
+    .panel-header {
+      padding: 10px 15px;
+
+      .panel-title, .panel-btn {
+        font-size: 20px;
+        padding-top: 5px;
+        border: none;
+        background: none;
+
+        .fa-arrow-down {
+          color: $fa-arrow-down;
+
+          &:hover {
+            color: $fa-arrow-down-hover;
+          }
+        }
+
+        .panel-clean {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .panel-table {
+      display: none;
+    }
+  }
+}

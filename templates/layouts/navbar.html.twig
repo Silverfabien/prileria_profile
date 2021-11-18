@@ -31,7 +31,7 @@
                      <a class="dropdown-item" href="{{ path('administration_user_index') }}">Gestion utilisateur</a>
                      <a class="dropdown-item" href="{{ path('administration_rank_index') }}">Gestion des grades</a>
                   {% endif %}
-                  <a class="dropdown-item" href="#">Liste des joueurs</a>
+                  <a class="dropdown-item" href="{{ path('administration_player_index') }}">Liste des joueurs</a>
                   <a class="dropdown-item" href="#">Liste des profils bloqués</a>
                   <hr class="dropdown-divider">
                   {% if is_granted('ROLE_ADMIN') %}
