@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        <h2 class="text-white text-center">Liste des joueurs</h2>
+    </div>
+    <table class="table table-responsive-lg">
+        <thead class="table-dark">
+        <tr class="text-center">
+            <th>Pseudo</th>
+            <th>UUID</th>
+            <th>Ip</th>
+            <th>Première connexion</th>
+            <th>Dernière connexion</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for player in players %}
+            <tr class="bg-light text-center align-middle bg-table-player">
+                <th>
+                    <img class="d-inline-block" src="https://cravatar.eu/head/{{ player.uuid }}/32" alt="">
+                    <a class="d-block" href="{{ path('player_show', {'batPlayer': player.batPlayer}) }}">{{ player.batPlayer }}</a>
+                </th>
+                <th>{{ player.uuid }}</th>
+                <th>{{ player.lastip }}</th>
+                <th>{{ player.firstLogin|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
+                <th>{{ player.lastLogin|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
+                <th class="table-btn-action">
+                    <a class="btn btn-info" href="#">
+                        <i class="fas fa-lock"></i>
+                    </a>
+                    <a class="btn btn-danger" href="#">
+                        <i class="fas fa-unlock"></i>
+                    </a>
+                </th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

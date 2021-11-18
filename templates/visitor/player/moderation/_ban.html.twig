@@ -1,0 +1,60 @@
+<div class="panel {{ nbBan > 0 ? 'panel-warning' : 'panel-info' }}">
+   <div class="panel-header clearfix">
+      <a class="panel-title panel-btn">
+         {% if nbBan > 0 %}
+            <i class="fas fa-arrow-down"></i>
+            <span>Ban :</span>
+         {% else %}
+            <b>Ban :</b> <span class="panel-clean">Cette personne n'a jamais été ban</span>
+         {% endif %}
+      </a>
+   </div>
+   <div class="panel-table">
+      <table class="table text-center">
+         <thead class="table-dark">
+            <tr>
+               <th>Serveur</th>
+               <th>Raison</th>
+               <th>Staff</th>
+               <th>Date</th>
+               <th>Fin du ban</th>
+               <th>Date unban</th>
+               <th>Staff unban</th>
+               <th>Raison unban</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% set bans = bans|merge(bansIp) %}
+            {% for ban in bans %}
+               <tr class="bg-light text-center align-middle
+                  {% if ban.banState == 0 and ban.banEnd %}
+                     bg-table-ban-inactive
+                  {% elseif ban.banState == 1 and ban.banEnd %}
+                     bg-table-ban-active
+                  {% else %}
+                     bg-table-ban-definitive
+                  {% endif %}
+               ">
+                  <th>{{ ban.banServer }}</th>
+                  <th>
+                     <a href="{{ path('moderation_ban_show', {'id': ban.id}) }}">{{ ban.banReason ? ban.banReason : '/' }}</a>
+                  </th>
+                  <th>{{ ban.banStaff }}</th>
+                  <th>{{ ban.banBegin|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
+                  <th>{{ ban.banEnd ? ban.banEnd|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : 'Définitif' }}</th>
+                  <th>{{ ban.banUnbandate ? ban.banUnbandate|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : '/' }}</th>
+                  <th>{{ ban.banUnbanstaff ? ban.banUnbanstaff : '/' }}</th>
+                  <th>{{ ban.banUnbanreason ? ban.banUnbanreason : '/' }}</th>
+                  <th class="table-btn-action">
+                     <a class="btn btn-info" href="{{ path('moderation_ban_edit', {'id': ban.id}) }}">
+                        <i class="fas fa-pencil-alt"></i>
+                     </a>
+                     {{ include('moderation/ban/_delete_form.html.twig') }}
+                  </th>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </div>
+</div>

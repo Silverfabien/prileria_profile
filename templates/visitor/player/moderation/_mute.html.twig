@@ -1,0 +1,60 @@
+<div class="panel {{ nbMute > 0 ? 'panel-warning' : 'panel-info' }}">
+   <div class="panel-header clearfix">
+      <a class="panel-title panel-btn">
+         {% if nbMute > 0 %}
+            <i class="fas fa-arrow-down"></i>
+            <span>Mute :</span>
+         {% else %}
+            <b>Mute :</b> <span class="panel-clean">Cette personne n'a jamais été mute</span>
+         {% endif %}
+      </a>
+   </div>
+   <div class="panel-table">
+      <table class="table text-center">
+         <thead class="table-dark">
+            <tr>
+               <th>Serveur</th>
+               <th>Raison</th>
+               <th>Staff</th>
+               <th>Date</th>
+               <th>Fin du ban</th>
+               <th>Date unban</th>
+               <th>Staff unban</th>
+               <th>Raison unban</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% set mutes = mutes|merge(mutesIp) %}
+            {% for mute in mutes %}
+               <tr class="bg-light text-center align-middle
+                  {% if mute.muteState == 0 and mute.muteEnd %}
+                     bg-table-mute-inactive
+                  {% elseif mute.muteState == 1 and mute.muteEnd %}
+                     bg-table-mute-active
+                  {% else %}
+                     bg-table-mute-definitive
+                  {% endif %}
+               ">
+                  <th>{{ mute.muteServer }}</th>
+                  <th>
+                     <a href="{{ path('moderation_mute_show', {'id': mute.id}) }}">{{ mute.muteReason ? mute.muteReason : '/' }}</a>
+                  </th>
+                  <th>{{ mute.muteStaff }}</th>
+                  <th>{{ mute.muteBegin|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
+                  <th>{{ mute.muteEnd ? mute.muteEnd|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : 'Définitif' }}</th>
+                  <th>{{ mute.muteUnmutedate ? mute.muteUnmutedate|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') : '/' }}</th>
+                  <th>{{ mute.muteUnmutestaff ? mute.muteUnmutestaff : '/' }}</th>
+                  <th>{{ mute.muteUnmutereason ? mute.muteUnmutereason : '/' }}</th>
+                  <th class="table-btn-action">
+                     <a class="btn btn-info" href="{{ path('moderation_mute_edit', {'id': mute.id}) }}">
+                        <i class="fas fa-pencil-alt"></i>
+                     </a>
+                     {{ include('moderation/mute/_delete_form.html.twig') }}
+                  </th>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </div>
+</div>
