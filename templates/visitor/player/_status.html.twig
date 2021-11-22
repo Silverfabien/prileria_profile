@@ -31,14 +31,14 @@
             </p>
          </div>
       {% endif %}
-      {% if nbWarning > 0 %}
+      {% if nbComments > 0 %}
          <div class="col-sm-4 player-view-frame text-center">
             <p class="frame-view-warning">
                Cet utilisateur a déjà reçu un avertissements sur nos serveur de jeux.
             </p>
          </div>
       {% endif %}
-      {% if nbBan == 0 and nbMute == 0 and nbWarning == 0 %}
+      {% if nbBan == 0 and nbMute == 0 and nbComments == 0 %}
          <div class="col-md-3 col-sm-4 player-view-frame text-center">
             <p class="frame-view-true">
                {{ random([

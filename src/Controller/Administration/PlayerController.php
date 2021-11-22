@@ -2,6 +2,7 @@
 
 namespace App\Controller\Administration;
 
+use App\Repository\Player\LockedRepository;
 use App\Repository\Player\PlayersRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,12 +16,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlayerController extends AbstractController
 {
     private PlayersRepository $playersRepository;
+    private LockedRepository $lockedRepository;
 
     public function __construct(
-        PlayersRepository $playersRepository
+        PlayersRepository $playersRepository,
+        LockedRepository $lockedRepository
     )
     {
         $this->playersRepository = $playersRepository;
+        $this->lockedRepository = $lockedRepository;
     }
 
     /**
@@ -40,7 +44,8 @@ class PlayerController extends AbstractController
         );
 
         return $this->render('administration/player/index.html.twig', [
-            'players' => $paginate
+            'players' => $paginate,
+            'lockeds' => $this->lockedRepository->findAll()
         ]);
     }
 }

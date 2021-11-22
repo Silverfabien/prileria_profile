@@ -2,9 +2,13 @@
 
 {% block body %}
    <div class="container">
-      <div class="bg-show-player">
-         {{ include('visitor/player/_information.html.twig') }}
-         {{ include('visitor/player/_status.html.twig') }}
+      <div class="show-player {{ locked ? 'bg-show-player-locked' : 'bg-show-player' }}">
+         {% if locked and not app.user %}
+            {{ include('visitor/player/_information_locked.html.twig') }}
+         {% else %}
+            {{ include('visitor/player/_information.html.twig') }}
+            {{ include('visitor/player/_status.html.twig') }}
+         {% endif %}
          {% if is_granted('ROLE_STAFF') %}
             <div class="historique-staff">
                <h3>Historique administratif</h3>
