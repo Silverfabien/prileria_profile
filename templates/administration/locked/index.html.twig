@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div>
+      <h2 class="text-white text-center">Liste des profil bloqués</h2>
+   </div>
+   <table class="table table-responsive-lg">
+      <thead class="table-dark">
+      <tr class="text-center">
+         <th>Joueur</th>
+         <th>Raison</th>
+         <th>Staff</th>
+         <th>Date</th>
+         <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for locked in lockeds %}
+         <tr class="bg-light text-center align-middle bg-table-locked">
+            <th>
+               <a class="lien-tab" href="{{ path('player_show', {'batPlayer': locked.player.batPlayer}) }}">
+                  <img class="player-img" src="https://cravatar.eu/head/{{ locked.player.uUID }}/32" alt=""><br>
+                  {{ locked.player.batPlayer }}
+               </a>
+            </th>
+            <th>{{ locked.reason }}</th>
+            <th>{{ locked.staff }}</th>
+            <th>{{ locked.date|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
+            <th class="table-btn-action">
+               <a class="btn btn-info" href="{{ path('administration_locked_edit', {'id': locked.id}) }}">
+                  <i class="fas fa-pencil-alt"></i>
+               </a>
+            </th>
+         </tr>
+      {% endfor %}
+      </tbody>
+   </table>
+{% endblock %}

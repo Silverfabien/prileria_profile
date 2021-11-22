@@ -1,4 +1,15 @@
-<h4 class="text-center">Profil de {{ player.batPlayer }}</h4>
+<h4 class="text-center">
+   {% if is_granted('ROLE_RESP') %}
+      {% if locked %}
+         {{ include('visitor/player/administration/_delete_form.html.twig') }}
+      {% else %}
+         <a href="{{ path('administration_locked_lock', {'player_id': player.id}) }}">
+            <img class="img-show-player" src="{{ asset('pictures/Cadennas_ouvert_Prileria.png') }}" alt="">
+         </a>
+      {% endif %}
+   {% endif %}
+   Profil de {{ player.batPlayer }}
+</h4>
 <div class="row">
    <div class="col-lg-3">
       <img src="https://cravatar.eu/head/{{ player.uuid }}/128" alt="">

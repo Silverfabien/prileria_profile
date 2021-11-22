@@ -8,6 +8,7 @@ use App\Repository\Moderation\CommentsRepository;
 use App\Repository\Moderation\KickRepository;
 use App\Repository\Moderation\MuteRepository;
 use App\Repository\Moderation\ReportRepository;
+use App\Repository\Player\LockedRepository;
 use App\Repository\Player\PlayersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,7 @@ class PlayerController extends AbstractController
     private KickRepository $kickRepository;
     private CommentsRepository $commentsRepository;
     private ReportRepository $reportRepository;
+    private LockedRepository $lockedRepository;
 
     public function __construct(
         PlayersRepository $playersRepository,
@@ -31,7 +33,8 @@ class PlayerController extends AbstractController
         MuteRepository $muteRepository,
         KickRepository $kickRepository,
         CommentsRepository $commentsRepository,
-        ReportRepository $reportRepository
+        ReportRepository $reportRepository,
+        LockedRepository $lockedRepository
     )
     {
         $this->playersRepository = $playersRepository;
@@ -40,6 +43,7 @@ class PlayerController extends AbstractController
         $this->kickRepository = $kickRepository;
         $this->commentsRepository = $commentsRepository;
         $this->reportRepository = $reportRepository;
+        $this->lockedRepository = $lockedRepository;
     }
 
     /**
@@ -61,6 +65,7 @@ class PlayerController extends AbstractController
         $notes = $this->commentsRepository->findBy(['entity' => $players->getUuid(), 'type' => 'NOTE']);
         $reports = $this->reportRepository->findAll();
         $allPlayers = $this->playersRepository->findAll();
+        $locked = $this->lockedRepository->findOneBy(['player' => $players]);
 
         return $this->render('visitor/player/show.html.twig', [
             'player' => $players,
@@ -76,7 +81,8 @@ class PlayerController extends AbstractController
             'notes' => $notes,
             'nbComments' => count($warnings) + count($notes),
             'reports' => $reports,
-            'allPlayers' => $allPlayers
+            'allPlayers' => $allPlayers,
+            'locked' => $locked
         ]);
     }
 }

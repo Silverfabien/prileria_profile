@@ -1,4 +1,5 @@
 $bg-show-player: #5eb5e0;
+$bg-show-player-locked: #989690;
 $frame-ban: #aa3333;
 $border-frame-ban: #8d0000;
 $frame-mute: #0000ff;
@@ -18,9 +19,34 @@ $border-panel-info: #bce8f1;
 $fa-arrow-down: #ffd700;
 $fa-arrow-down-hover: #daa520;
 
-.bg-show-player {
+.show-player {
   @include padding-show;
-  background-color: $bg-show-player!important;
+
+  .img-show-player {
+    width: 25px;
+    margin-top: -5px;
+  }
+
+  .img-locked {
+    width: 128px;
+  }
+
+  .text-locked {
+    margin-top: 50px;
+  }
+
+  .btn-img {
+    border: none;
+    background: none;
+  }
+
+  &.bg-show-player {
+    background-color: $bg-show-player!important;
+  }
+
+  &.bg-show-player-locked {
+    background-color: $bg-show-player-locked!important;
+  }
 
   .row {
     margin-right: 0;
