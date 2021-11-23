@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div class="container">
+      <div class="bg-panel-admin text-center">
+         <div>
+            <h2>Panel Administration</h2>
+            <p class="pt-3"><b>Bienvenue {{ app.user.userIdentifier }} !</b></p>
+            {% if is_granted('ROLE_ADMIN') %}
+               <p class="pt-1">
+                  En tant qu'administrateur disposant des droits de super utilisateur, vous pouvez gérer les punitions des joueurs et gérer les comptes staff.<br>
+                  <span class="text-darkred">Ce panel et confidentiel et nul personne n'étant pas administrateur de Prileria, doivent avoir accès à ce panel.</span>
+               </p>
+            {% else %}
+               <p>
+                  En tant que membre de l'équipe, vous pouvez accéder aux punitions des joueurs et autre.<br>
+                  <span class="text-darkred">Ce panel et confidentiel et nul personne n'étant pas membre de l'équipe de Prileria, doivent avoir accès à ce panel.</span>
+               </p>
+            {% endif %}
+         </div>
+         <hr>
+         <div class="row">
+            <div class="col-lg-4 col-md-6 col-12 card-separate-col-lg">
+               <a class="card-link" href="{{ path('administration_player_index') }}">
+                  <div class="card card-height card-player">
+                     <div class="card-body">
+                        <div class="inner">
+                           <h5>Joueurs enregistrés</h5>
+                           <p>Nombre enregistrés : {{ nbPlayers }}</p>
+                           <div class="card-icon">
+                              <i class="fas fa-user"></i>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-12 card-separate-col-lg">
+               <a class="card-link" href="{{ path('moderation_ban_index') }}">
+                  <div class="card card-height card-ban">
+                     <div class="card-body">
+                        <div class="inner">
+                           <h5>Bannissements</h5>
+                           <p>Bans enregistrés : {{ nbBans }}</p>
+                           <p>Bans actifs : {{ nbBansActif }}</p>
+                           <div class="card-icon">
+                              <i class="fas fa-gavel"></i>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-12 card-separate-col-lg">
+               <a class="card-link" href="{{ path('moderation_mute_index') }}">
+                  <div class="card card-height card-mute">
+                     <div class="card-body">
+                        <div class="inner">
+                           <h5>Mutes</h5>
+                           <p>Mutes enregistrés : {{ nbMutes }}</p>
+                           <p>Mutes actifs : {{ nbMutesActif }}</p>
+                           <div class="card-icon">
+                              <i class="fas fa-microphone-slash"></i>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-12 card-separate-col-md">
+               <a class="card-link" href="{{ path('moderation_report_index') }}">
+                  <div class="card card-height
+                     {% if nbReportsUnprocessed > 0 %}
+                        {{ nbReportsNotArchived > 0 ? 'card-report-archived' : 'card-report-unprocessed' }}
+                     {% else %}
+                        card-report
+                     {% endif %}
+                  ">
+                     <div class="card-body">
+                        <div class="inner">
+                           <h5>Reports enregistrés</h5>
+                           <p>Reports enregistrés : {{ nbReports }}</p>
+                           <p>Reports non traités : {{ nbReportsUnprocessed }}</p>
+                           <p>Reports à archiver : {{ nbReportsNotArchived }}</p>
+                           <div class="card-icon">
+                              <i class="fas fa-bullhorn"></i>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-12 card-separate-col">
+               <a class="card-link" href="{{ path('moderation_kick_index') }}">
+                  <div class="card card-height card-kick">
+                     <div class="card-body">
+                        <div class="inner">
+                           <h5>Kick</h5>
+                           <p>Kicks enregistrés : {{ nbKicks }}</p>
+                           <div class="card-icon">
+                              <i class="fas fa-door-open"></i>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-12">
+               <a class="card-link" href="{{ path('moderation_comments_index') }}">
+                  <div class="card card-height card-comments">
+                     <div class="card-body">
+                        <div class="inner">
+                           <h5>Warns & Notes</h5>
+                           <p>Warns & Notes enregistrés : {{ nbComments }}</p>
+                           <p>Warns : {{ nbWarns }}</p>
+                           <p>Notes : {{ nbNotes }}</p>
+                           <div class="card-icon">
+                              <i class="fas fa-exclamation-triangle"></i>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </a>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}
