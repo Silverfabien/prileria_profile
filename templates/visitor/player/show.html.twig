@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <div class="container">
+      <div class="show-player {{ locked ? 'bg-show-player-locked' : 'bg-show-player' }}">
+         {% if locked and not app.user %}
+            {{ include('visitor/player/_information_locked.html.twig') }}
+         {% else %}
+            {{ include('visitor/player/_information.html.twig') }}
+            {{ include('visitor/player/_status.html.twig') }}
+         {% endif %}
+         {% if is_granted('ROLE_STAFF') %}
+            <div class="historique-staff">
+               <h3>Historique administratif</h3>
+               {{ include('visitor/player/moderation/_ban.html.twig') }}
+               {{ include('visitor/player/moderation/_mute.html.twig') }}
+               {{ include('visitor/player/moderation/_kick.html.twig') }}
+               {{ include('visitor/player/moderation/_comments.html.twig') }}
+               {{ include('visitor/player/moderation/_report.html.twig') }}
+            </div>
+         {% endif %}
+      </div>
+   </div>
+{% endblock %}
+
+{% block javascripts %}
+   {{ encore_entry_script_tags('player') }}
+{% endblock %}

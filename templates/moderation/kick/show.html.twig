@@ -11,10 +11,12 @@
             <div class="col-lg-9">
                <h4>
                   {{ kick.uuid }}
-                  <a class="btn btn-info" href="{{ path('moderation_kick_edit', {'id': kick.id}) }}">
-                     <i class="fas fa-pencil-alt"></i>
-                  </a>
-                  {{ include('moderation/kick/_delete_form.html.twig') }}
+                  {% if is_granted('ROLE_RESP') %}
+                     <a class="btn btn-info" href="{{ path('moderation_kick_edit', {'id': kick.id}) }}">
+                        <i class="fas fa-pencil-alt"></i>
+                     </a>
+                     {{ include('moderation/kick/_delete_form.html.twig') }}
+                  {% endif %}
                </h4>
                <p>
                   <b>Mute le :</b> {{ kick.kickDate|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}

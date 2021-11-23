@@ -1,0 +1,73 @@
+{% set nbReport = 0 %}
+{% for report in reports %}
+   {% if report.reportedUuid|replace({'-': ''}) == player.uuid %}
+      {% set nbReport = nbReport + 1 %}
+   {% endif %}
+{% endfor %}
+<div class="panel {{ nbReport > 0 ? 'panel-warning' : 'panel-info' }}">
+   <div class="panel-header clearfix">
+      {% if nbReport > 0 %}
+         <a class="panel-title panel-btn">
+            <i class="fas fa-arrow-down"></i>
+            <span>Report :</span>
+         </a>
+      {% else %}
+         <span class="panel-title">
+            <b>Report :</b> <span class="panel-clean">Cette personne n'a jamais été report</span>
+         </span>
+      {% endif %}
+   </div>
+   <div class="panel-table">
+      <table class="table text-center">
+         <thead class="table-dark">
+            <tr>
+               <th>Signaleur</th>
+               <th>Raison</th>
+               <th>Date</th>
+               <th>Serveur</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for report in reports %}
+               <tr class="bg-light text-center align-middle
+                  {% if report.appreciation|replace({'/': ' '})|truncate(4, true, '') == "True" %}
+                     {{ report.archived == 1 ? 'bg-table-report-true-archived' : 'bg-table-report-true' }}
+                  {% elseif report.appreciation == "False" %}
+                     {{ report.archived == 1 ? 'bg-table-report-false-archived' : 'bg-table-report-false' }}
+                  {% elseif report.appreciation == "Uncertain" %}
+                     {{ report.archived == 1 ? 'bg-table-report-uncertain-archived' : 'bg-table-report-uncertain' }}
+                  {% endif %}
+               ">
+                  <th>
+                     {% set replaceReporterUuid = report.reporterUuid|replace({'-': ''}) %}
+                     {% set splitReporterUuid = "" %}
+                     {% set reportersUuid = "" %}
+                     {% if replaceReporterUuid|length > 32 %}
+                        {% set splitReporterUuid = replaceReporterUuid|split(',', 32) %}
+                     {% endif %}
+                     <a class="d-block" href="#">
+                        {% set firstSplitReporterUuid = splitReporterUuid|first %}
+                        {% set countReporterUuid = -1 %}
+                        {% for nbReporterUuid in splitReporterUuid %}
+                           {% set countReporterUuid = countReporterUuid + 1 %}
+                        {% endfor %}
+                        {% for reporterPlayer in allPlayers %}
+                           {{ replaceReporterUuid == reporterPlayer.uuid ? reporterPlayer.batPlayer : '' }}
+                           {{ firstSplitReporterUuid == reporterPlayer.uuid ? reporterPlayer.batPlayer : '' }}
+                        {% endfor %}
+                     </a>
+                     {{ countReporterUuid == 1 ? '+1 joueur' : '' }}
+                     {{ countReporterUuid > 1 ? '+'~countReporterUuid~' joueurs' : '' }}
+                  </th>
+                  <th>
+                     <a href="{{ path('moderation_report_show', {'id': report.id}) }}">{{ report.reason ? report.reason : '/' }}</a>
+                  </th>
+                  <th>{{ report.date|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
+                  {% set splitReporterLocation = report.reporterLocation|split('/') %}
+                  <th>{{ splitReporterLocation[0] }}</th>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </div>
+</div>

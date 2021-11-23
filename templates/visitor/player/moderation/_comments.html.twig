@@ -1,0 +1,56 @@
+<div class="panel {{ nbComments > 0 ? 'panel-warning' : 'panel-info' }}">
+   <div class="panel-header clearfix">
+      {% if nbComments > 0 %}
+         <a class="panel-title panel-btn">
+            <i class="fas fa-arrow-down"></i>
+            <span>Warn / Note :</span>
+         </a>
+      {% else %}
+         <span class="panel-title">
+            <b>Warn / Note :</b> <span class="panel-clean">Cette personne n'a jamais été warn ou n'a reçu de note</span>
+         </span>
+      {% endif %}
+   </div>
+   <div class="panel-table">
+      <table class="table text-center">
+         <thead class="table-dark">
+            <tr>
+               <th>Raison</th>
+               <th>Staff</th>
+               <th>Date</th>
+               {% if is_granted('ROLE_RESP') %}
+                  <th>Action</th>
+               {% endif %}
+            </tr>
+         </thead>
+         <tbody>
+            {% set comments = [] %}
+            {% set comments = comments|merge(warnings) %}
+            {% set comments = comments|merge(notes) %}
+            {% for comment in comments %}
+               <tr class="bg-light text-center align-middle
+                  {% if comment.type == "WARNING" %}
+                     bg-table-comments-warning
+                  {% else %}
+                     bg-table-comments-note
+                  {% endif %}
+               ">
+                  <th>
+                     <a href="{{ path('moderation_comments_show', {'id': comment.id}) }}">{{ comment.note ? comment.note : '/' }}</a>
+                  </th>
+                  <th>{{ comment.staff }}</th>
+                  <th>{{ comment.date|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
+                  {% if is_granted('ROLE_RESP') %}
+                     <th class="table-btn-action">
+                        <a class="btn btn-info" href="{{ path('moderation_comments_edit', {'id': comment.id}) }}">
+                           <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        {{ include('moderation/comments/_delete_form.html.twig') }}
+                     </th>
+                  {% endif %}
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </div>
+</div>

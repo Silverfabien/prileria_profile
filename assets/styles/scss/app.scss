@@ -9,6 +9,12 @@
 @import "content/moderation/kick";
 @import "content/moderation/comments";
 @import "content/moderation/report";
+@import "content/administration/index";
+@import "content/administration/user";
+@import "content/administration/rank";
+@import "content/administration/player";
+@import "content/administration/locked";
+@import "content/visitor/player";
 @import "components/pagination";
 
 body {

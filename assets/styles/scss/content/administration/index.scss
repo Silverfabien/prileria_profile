@@ -1,0 +1,136 @@
+$bg-panel-admin: #76909b;
+$text-darkred: #8b0000;
+$bg-card-player: #b1b1b1;
+$bg-card-ban: #d63232;
+$bg-card-mute: #d63232;
+$bg-card-kick: #ea9f1b;
+$bg-card-comments: #10a982;
+$bg-card-report: #21af39;
+
+.bg-panel-admin {
+  background-color: $bg-panel-admin;
+  padding: 15px;
+
+  .text-darkred {
+    color: $text-darkred;
+  }
+
+  .card-separate-col-lg {
+    margin-bottom: 15px;
+  }
+
+  @media screen and (max-width: 992px) {
+    .card-separate-col-md {
+      margin-bottom: 15px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .card-separate-col {
+      margin-bottom: 15px;
+    }
+
+    .card-height {
+      height: 140px;
+    }
+  }
+
+  .card-link:hover {
+    color: black;
+  }
+
+  .card-height {
+    min-height: 140px;
+  }
+
+  .card:hover {
+    box-shadow: 0 0 25px black;
+    animation: card 1.5s infinite 0s;
+  }
+
+  @keyframes card {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .inner {
+    text-align: left;
+
+    p {
+      margin-bottom: 0;
+    }
+
+    .card-icon {
+      position: absolute;
+      font-size: 90px;
+      color: rgba(0, 0, 0, 0.15);
+      top: -10px;
+      right: 10px;
+    }
+  }
+
+  .card-player {
+    background-color: $bg-card-player;
+  }
+
+  .card-ban {
+    background-color: $bg-card-ban;
+  }
+
+  .card-mute {
+    background-color: $bg-card-mute;
+  }
+
+  .card-report {
+    background-color: $bg-card-report;
+  }
+
+  .card-kick {
+    background-color: $bg-card-kick;
+  }
+
+  .card-comments {
+    background-color: $bg-card-comments;
+  }
+
+  .card-report-archived {
+    animation: archived 2s infinite;
+
+    &:hover {
+      animation: archivedHover 2s infinite;
+    }
+  }
+
+  .card-report-unprocessed {
+    animation: unprocessed 2s infinite;
+
+    &:hover {
+      animation: unprocessedHover 2s infinite;
+    }
+  }
+
+  @keyframes archived {
+    0% { background-color:#21AF39; }
+    50% { background-color:#90C198; }
+    100% { background-color:#21AF39; }
+  }
+
+  @keyframes archivedHover {
+    0% { background-color:#21AF39; transform: scale(1); }
+    50% { background-color:#90C198; transform: scale(1.1); }
+    100% { background-color:#21AF39; transform: scale(1); }
+  }
+
+  @keyframes unprocessed {
+    0% { background-color:#21AF39; }
+    50% { background-color:#EAD823; }
+    100% { background-color:#21AF39; }
+  }
+
+  @keyframes unprocessedHover {
+    0% { background-color:#21AF39; transform: scale(1); }
+    50% { background-color:#EAD823; transform: scale(1.1); }
+    100% { background-color:#21AF39; transform: scale(1); }
+  }
+}

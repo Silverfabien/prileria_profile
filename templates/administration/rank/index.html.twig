@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        <h2 class="text-white text-center">Liste des grades</h2>
+    </div>
+    <table class="table table-responsive-lg">
+        <thead class="table-dark">
+        <tr class="text-center">
+            <th>Nom du grade</th>
+            <th>Grades</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for rank in ranks %}
+            <tr class="bg-light text-center align-middle bg-table-rank">
+                <th>{{ rank.rolename }}</th>
+                <th>{{ rank.role|json_encode }}</th>
+                <th class="table-btn-action">
+                    <a class="btn btn-info" href="{{ path('administration_rank_edit', {'id': rank.id}) }}">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                </th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
