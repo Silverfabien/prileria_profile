@@ -18,7 +18,9 @@
                <th>Raison</th>
                <th>Staff</th>
                <th>Date</th>
-               <th>Action</th>
+               {% if is_granted('ROLE_RESP') %}
+                  <th>Action</th>
+               {% endif %}
             </tr>
          </thead>
          <tbody>
@@ -38,12 +40,14 @@
                   </th>
                   <th>{{ comment.staff }}</th>
                   <th>{{ comment.date|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
-                  <th class="table-btn-action">
-                     <a class="btn btn-info" href="{{ path('moderation_comments_edit', {'id': comment.id}) }}">
-                        <i class="fas fa-pencil-alt"></i>
-                     </a>
-                     {{ include('moderation/comments/_delete_form.html.twig') }}
-                  </th>
+                  {% if is_granted('ROLE_RESP') %}
+                     <th class="table-btn-action">
+                        <a class="btn btn-info" href="{{ path('moderation_comments_edit', {'id': comment.id}) }}">
+                           <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        {{ include('moderation/comments/_delete_form.html.twig') }}
+                     </th>
+                  {% endif %}
                </tr>
             {% endfor %}
          </tbody>

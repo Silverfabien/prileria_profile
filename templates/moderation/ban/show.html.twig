@@ -23,10 +23,12 @@
             <div class="col-lg-9">
                <h4>
                   {{ ban.uuid ? ban.uuid : firstPlayer.uuid }}
-                  <a class="btn btn-info" href="{{ path('moderation_ban_edit', {'id': ban.id}) }}">
-                     <i class="fas fa-pencil-alt"></i>
-                  </a>
-                  {{ include('moderation/ban/_delete_form.html.twig') }}
+                  {% if is_granted('ROLE_RESP') %}
+                     <a class="btn btn-info" href="{{ path('moderation_ban_edit', {'id': ban.id}) }}">
+                        <i class="fas fa-pencil-alt"></i>
+                     </a>
+                     {{ include('moderation/ban/_delete_form.html.twig') }}
+                  {% endif %}
                </h4>
                {% if ban.banIp %}
                   <p>

@@ -11,7 +11,9 @@
          <th>Raison</th>
          <th>Staff</th>
          <th>Date</th>
-         <th>Action</th>
+         {% if is_granted('ROLE_RESP') %}
+            <th>Action</th>
+         {% endif %}
       </tr>
       </thead>
       <tbody>
@@ -26,11 +28,13 @@
             <th>{{ locked.reason }}</th>
             <th>{{ locked.staff }}</th>
             <th>{{ locked.date|localizeddate('none', 'none', null, null, 'dd MMMM Y à HH:mm') }}</th>
-            <th class="table-btn-action">
-               <a class="btn btn-info" href="{{ path('administration_locked_edit', {'id': locked.id}) }}">
-                  <i class="fas fa-pencil-alt"></i>
-               </a>
-            </th>
+            {% if is_granted('ROLE_RESP') %}
+               <th class="table-btn-action">
+                  <a class="btn btn-info" href="{{ path('administration_locked_edit', {'id': locked.id}) }}">
+                     <i class="fas fa-pencil-alt"></i>
+                  </a>
+               </th>
+            {% endif %}
          </tr>
       {% endfor %}
       </tbody>

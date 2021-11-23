@@ -17,8 +17,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/administration/locked", name="administration_locked_")
- *
- * @IsGranted("ROLE_RESP")
  */
 class LockedController extends AbstractController
 {
@@ -54,6 +52,8 @@ class LockedController extends AbstractController
      *
      * @Route("/lock/{player_id}", name="lock", methods={"GET", "POST"})
      * @ParamConverter("players", options={"id" = "player_id"})
+     *
+     * @IsGranted("ROLE_RESP")
      */
     public function lock(
         Request $request,
@@ -85,6 +85,8 @@ class LockedController extends AbstractController
      * @return Response
      *
      * @Route("/unlock/{id}", name="unlock", methods={"POST"})
+     *
+     * @IsGranted("ROLE_RESP")
      */
     public function unlock(
         Request $request,
@@ -106,6 +108,8 @@ class LockedController extends AbstractController
      * @return Response
      *
      * @Route("/edit/{id}", name="edit", methods={"GET", "POST"})
+     *
+     * @IsGranted("ROLE_RESP")
      */
     public function edit(
         Request $request,
