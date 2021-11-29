@@ -11,6 +11,8 @@ use App\Repository\Moderation\ReportRepository;
 use App\Repository\Player\LockedRepository;
 use App\Repository\Player\PlayersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -84,5 +86,53 @@ class PlayerController extends AbstractController
             'allPlayers' => $allPlayers,
             'locked' => $locked
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @Route("/search_player/", name="search_player", options={"expose"=true})
+     */
+    public function search(
+        Request $request
+    ): JsonResponse
+    {
+        $search = $request->get('search');
+
+        if (!$search) {
+            return new JsonResponse();
+        }
+
+        if ($this->isGranted('ROLE_RESP')) {
+            $playersByIp = $this->playersRepository->searchByIp($search);
+        }
+
+        $players = $this->playersRepository->searchByPseudo($search);
+
+        $output = '';
+
+        if ($this->isGranted('ROLE_RESP') && $playersByIp) {
+            $output .='<ul class="dropdown-menu menu-black show menu-search">';
+            foreach ($playersByIp as $key => $playerByIp) {
+                $output .=
+                    '<li class="dropdown-item">
+                            <a class="link-profil" href="https://profils.prileria.net/player/'.$playerByIp->getBatPlayer().'">'.$playerByIp->getBatPlayer().'</a>
+                        </li>';
+            }
+            $output .='</ul>';
+        } elseif ($players) {
+            $output .='<ul class="dropdown-menu menu-black show menu-search">';
+            foreach ($players as $key => $player) {
+                $output .=
+                    '<li class="dropdown-item">
+                    <a class="link-profil" href="https://profils.prileria.net/player/'.$player->getBatPlayer().'">'.$player->getBatPlayer().'</a>
+                </li>'
+                ;
+            }
+            $output .='</ul>';
+        }
+
+        return new JsonResponse($output);
     }
 }

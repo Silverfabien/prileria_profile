@@ -30,7 +30,8 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 604800
                 path: /
-                name: 'user_remember'
+                always_remember_me: true
+                #name: 'user_remember'
             custom_authenticator: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
