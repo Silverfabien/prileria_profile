@@ -115,16 +115,23 @@ class PlayerController extends AbstractController
         if ($this->isGranted('ROLE_RESP') && $playersByIp) {
             $output .='<ul class="dropdown-menu menu-black show menu-search">';
             foreach ($playersByIp as $key => $playerByIp) {
-                $output .= '<li class="dropdown-item"><a href="https://profils.prileria.net/player/'.$playerByIp->getBatPlayer().'">'.$playerByIp->getBatPlayer().'</a></li>';
+                $output .=
+                    '<li class="dropdown-item">
+                            <a class="link-profil" href="https://profils.prileria.net/player/'.$playerByIp->getBatPlayer().'">'.$playerByIp->getBatPlayer().'</a>
+                        </li>';
+            }
+            $output .='</ul>';
+        } elseif ($players) {
+            $output .='<ul class="dropdown-menu menu-black show menu-search">';
+            foreach ($players as $key => $player) {
+                $output .=
+                    '<li class="dropdown-item">
+                    <a class="link-profil" href="https://profils.prileria.net/player/'.$player->getBatPlayer().'">'.$player->getBatPlayer().'</a>
+                </li>'
+                ;
             }
             $output .='</ul>';
         }
-
-        $output .='<ul class="dropdown-menu menu-black show menu-search">';
-        foreach ($players as $key => $player) {
-            $output .= '<li class="dropdown-item"><a href="https://profils.prileria.net/player/'.$player->getBatPlayer().'">'.$player->getBatPlayer().'</a></li>';
-        }
-        $output .='</ul>';
 
         return new JsonResponse($output);
     }
