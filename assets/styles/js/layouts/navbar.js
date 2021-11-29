@@ -5,4 +5,8 @@ $(document).ready(function () {
         $(".myNav").toggleClass("showNav");
         $(".navList").fadeIn();
     });
+
+    $('#searchPlayer').click(function () {
+        $('#formPlayerSearch').toggle();
+    })
 })

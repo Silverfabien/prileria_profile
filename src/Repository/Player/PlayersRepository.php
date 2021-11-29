@@ -27,4 +27,22 @@ class PlayersRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function searchByPseudo($search) {
+        return $this->createQueryBuilder('p')
+            ->where('p.batPlayer LIKE :search')
+            ->setParameter('search', '%'.$search.'%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function searchByIp($search) {
+        return $this->createQueryBuilder('p')
+            ->where('p.lastip LIKE :search')
+            ->setParameter('search', '%'.$search.'%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
 }
