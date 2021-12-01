@@ -37,7 +37,7 @@
                   {% set splitReporterUuid = replaceReporterUuid|split(',', 32) %}
                {% endif %}
                <img class="d-inline-block" src="https://cravatar.eu/head/{{ splitReporterUuid ? splitReporterUuid|first : report.reporterUuid }}/32" alt="">
-               <a class="d-block" href="#">
+               <span class="d-block">
                   {% set firstSplitReporterUuid = splitReporterUuid|first %}
                   {% set countReporterUuid = -1 %}
                   {% for nbReporterUuid in splitReporterUuid %}
@@ -47,18 +47,18 @@
                      {{ replaceReporterUuid == player.uuid ? player.batPlayer : '' }}
                      {{ firstSplitReporterUuid == player.uuid ? player.batPlayer : '' }}
                   {% endfor %}
-               </a>
+               </span>
                {{ countReporterUuid == 1 ? '+1 joueur' : '' }}
                {{ countReporterUuid > 1 ? '+'~countReporterUuid~' joueurs' : '' }}
             </th>
             <th>
                <img class="d-inline-block" src="https://cravatar.eu/head/{{ report.reportedUuid }}/32" alt="">
-               <a class="d-block" href="#">
+               <span class="d-block">
                   {% set replaceReportedUuid = report.reportedUuid|replace({'-': ''}) %}
                   {% for player in players %}
                      {{ replaceReportedUuid == player.uuid ? player.batPlayer : '' }}
                   {% endfor %}
-               </a>
+               </span>
             </th>
             <th>{{ report.date }}</th>
          </tr>

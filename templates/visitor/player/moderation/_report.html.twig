@@ -28,7 +28,7 @@
             </tr>
          </thead>
          <tbody>
-            {% for report in reports %}
+            {% for report in reports if report.reportedUuid|replace({'-': ''}) == player.uuid %}
                <tr class="bg-light text-center align-middle
                   {% if report.appreciation|replace({'/': ' '})|truncate(4, true, '') == "True" %}
                      {{ report.archived == 1 ? 'bg-table-report-true-archived' : 'bg-table-report-true' }}

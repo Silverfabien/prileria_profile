@@ -37,7 +37,7 @@
          ">
             <th>
                <img class="d-inline-block" src="https://cravatar.eu/head/{{ comment.entity }}/32" alt="">
-               <a class="d-block" href="#">{{ batPlayer }}</a>
+               <a class="d-block" href="{{ path('player_show', {'batPlayer': batPlayer}) }}">{{ batPlayer }}</a>
             </th>
             <th>
                <a href="{{ path('moderation_comments_show', {'id': comment.id}) }}">{{ comment.note }}</a>

@@ -57,7 +57,7 @@
                <th>
                   {% if ban.banIp %}
                      <img class="d-inline-block" src="https://cravatar.eu/head/{{ playerByBanUuid }}/32" alt="">
-                     <a class="d-block" href="#">{{ playerByBanIp }}</a>
+                     <a class="d-block" href="{{ path('player_show', {'batPlayer': playerByBanIp}) }}">{{ playerByBanIp }}</a>
                      {% if is_granted('ROLE_RESP') %}
                         {{ ban.banIp }}
                         {% if countPlayerByIp == 1 %}
@@ -70,7 +70,7 @@
                      {% endif %}
                   {% else %}
                      <img class="d-inline-block" src="https://cravatar.eu/head/{{ ban.uuid }}/32" alt="">
-                     <a class="d-block" href="#">{{ batPlayer }}</a>
+                     <a class="d-block" href="{{ path('player_show', {'batPlayer': batPlayer}) }}">{{ batPlayer }}</a>
                   {% endif %}
                </th>
                <th>{{ ban.banServer }}</th>

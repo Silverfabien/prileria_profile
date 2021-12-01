@@ -24,6 +24,14 @@ class UserType extends AbstractType
                     'autofocus' => true
                 ]
             ])
+            ->add('uuid', TextType::class, [
+                'label' => 'Uuid du joueur',
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Ex: af860b2e418411ec81d30242ac130003',
+                    'autofocus' => true
+                ]
+            ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les deux mots de passe doivent correspondre',

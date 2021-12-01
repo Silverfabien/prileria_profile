@@ -57,7 +57,7 @@
             <th>
                {% if mute.muteIp %}
                   <img class="d-inline-block" src="https://cravatar.eu/head/{{ playerByMuteUuid }}/32" alt="">
-                  <a class="d-block" href="#">{{ playerByMuteIp }}</a>
+                  <a class="d-block" href="{{ path('player_show', {'batPlayer': playerByMuteIp}) }}">{{ playerByMuteIp }}</a>
                   {% if is_granted('ROLE_RESP') %}
                      {{ mute.muteIp }}
                      {% if countPlayerByIp == 1 %}
@@ -70,7 +70,7 @@
                   {% endif %}
                {% else %}
                   <img class="d-inline-block" src="https://cravatar.eu/head/{{ mute.uuid }}/32" alt="">
-                  <a class="d-block" href="#">{{ batPlayer }}</a>
+                  <a class="d-block" href="{{ path('player_show', {'batPlayer': batPlayer}) }}">{{ batPlayer }}</a>
                {% endif %}
             </th>
             <th>{{ mute.muteServer }}</th>

@@ -28,7 +28,7 @@
          <tr class="bg-light text-center align-middle bg-table-kick">
             <th>
                <img class="d-inline-block" src="https://cravatar.eu/head/{{ kick.uuid }}/32" alt="">
-               <a class="d-block" href="#">{{ batPlayer }}</a>
+               <a class="d-block" href="{{ path('player_show', {'batPlayer': batPlayer}) }}">{{ batPlayer }}</a>
             </th>
             <th>{{ kick.kickServer }}</th>
             <th>
