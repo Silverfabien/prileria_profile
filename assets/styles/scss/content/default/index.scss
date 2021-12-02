@@ -1,0 +1,41 @@
+$bg-index: #eeb52d;
+
+.index {
+  background-color: $bg-index;
+  margin-top: 10px;
+  padding: 15px;
+
+  .index-header {
+    text-align: center;
+
+    .btn-return {
+      float: right;
+      margin-top: -45px;
+    }
+  }
+
+  .index-body {
+    padding-top: 10px;
+
+    .index-stats {
+      padding-top: 15px;
+
+      .index-icon {
+        font-size: 65px;
+      }
+
+      .index-info {
+        padding-top: 15px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .btn-return {
+    float: none!important;
+    margin-top: 0!important;
+  }
+}

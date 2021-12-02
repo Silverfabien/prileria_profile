@@ -54,7 +54,7 @@
                            {% endfor %}
                         {% endif %}
                      </p>
-                     <p><b>Ip :</b> {{ report.reporterIp }}</p>
+                     <p><b>Ip :</b> {{ report.reporterIp|replace({'/' : ''}) }}</p>
                      {% set splitReporterLocation = report.reporterLocation|split('/') %}
                      <p><b>Serveur:</b> {{ splitReporterLocation[0] }}</p>
                      <p>
@@ -86,7 +86,7 @@
                            {{ replaceReportedUuid == player.uuid ? player.batPlayer : '' }}
                         {% endfor %}
                      </p>
-                     <p><b>Ip :</b> {{ report.reportedIp }}</p>
+                     <p><b>Ip :</b> {{ report.reportedIp|replace({'/' : ''}) }}</p>
                      {% set splitReportedLocation = report.reportedLocation|split('/') %}
                      <p><b>Serveur:</b> {{ splitReportedLocation[0] }}</p>
                      <p>

@@ -1,5 +1,57 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+   <div class="container">
+      <div class="index">
+         <div class="index-header">
+            <div class="index-title">
+               <h2>Prileria profil</h2>
+               <a class="btn btn-info btn-return" href="https://prileria.net">Retour au site principal</a>
+            </div>
+         </div>
+         <div class="index-body">
+            <p class="fs-5"><b>Bienvenue sur la page des profils des joueurs du serveur.</b></p>
 
+            <p>Site regroupant tous les joueurs inscrire sur Prileria et leurs activités.<br>
+               Ce site permet de vous renseigner sur le statut de certains joueurs.</p>
+            <hr>
+            <h2>Statistique publique</h2>
+            <div class="row index-stats">
+               <div class="col-sm-4 col-12">
+                  <div class="row">
+                     <div class="col-lg-3 col-md-4 col-12 index-icon">
+                        <i class="fas fa-user-alt"></i>
+                     </div>
+                     <div class="col-lg-9 col-md-8 col-12 index-info">
+                        <p>Joueurs</p>
+                        <p>{{ nbPlayer }}</p>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-4 col-12">
+                  <div class="row">
+                     <div class="col-lg-3 col-md-4 col-12 index-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                     </div>
+                     <div class="col-lg-9 col-md-8 col-12 index-info">
+                        <p>Avertissements</p>
+                        <p>{{ nbWarn }}</p>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-4 col-12">
+                  <div class="row">
+                     <div class="col-lg-3 col-md-4 col-12 index-icon">
+                        <i class="fas fa-gavel"></i>
+                     </div>
+                     <div class="col-lg-9 col-md-8 col-12 index-info">
+                        <p>Bans actifs</p>
+                        <p>{{ nbBan }}</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 {% endblock %}
